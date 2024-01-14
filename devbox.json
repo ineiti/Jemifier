@@ -1,0 +1,25 @@
+{
+  "packages": [
+    "bun@latest",
+    "nodejs@20",
+    "git@latest",
+    "vim@latest",
+    "less@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null",
+      "alias ls='ls --color'"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  },
+  "env": {
+    "BUN_INSTALL": "$PWD/.bun",
+    "LS_COLORS": "di=33",
+    "PATH": "$PATH:$PWD/.bun/bin"
+  }
+}

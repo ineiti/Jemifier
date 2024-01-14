@@ -1,0 +1,44 @@
+@media (min-width: 768px) {
+    .container {
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        max-width: 60%;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    min-width: 320px;
+    /* Ensure minimum width for responsive layouts */
+    margin: 0 auto;
+    /* Center the container horizontally */
+    padding: 20px;
+    background-color: #fff;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px;
+}
+
+.router-outlet {
+    margin-top: 20px;
+}

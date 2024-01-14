@@ -1,0 +1,102 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "bun@latest": {
+      "last_modified": "2024-01-07T11:22:52Z",
+      "resolved": "github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6#bun",
+      "source": "devbox-search",
+      "version": "1.0.21",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/81lq8hai608xhpbas8qzpkvpznkmq0rp-bun-1.0.21"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/smzmnf4pqlbsy46l89jy14n2qab8gs4g-bun-1.0.21"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/48azswgpqamdsaq5frbh8jxdb28hfbyr-bun-1.0.21"
+        }
+      }
+    },
+    "git@latest": {
+      "last_modified": "2023-12-13T22:54:10Z",
+      "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#git",
+      "source": "devbox-search",
+      "version": "2.42.0",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/q7avibx4c00h7zl3jfh3r5mc4xs6wsnj-git-2.42.0"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/v7f1fag7w6ifk9cg1p5xhnnzy7mf0kmv-git-2.42.0"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/hhf2cldbfcndgilsak5x8dxphgj1y3id-git-2.42.0"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0"
+        }
+      }
+    },
+    "less@latest": {
+      "last_modified": "2023-12-13T22:54:10Z",
+      "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#less",
+      "source": "devbox-search",
+      "version": "643",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/rijygf0wvj0vzbzyp4zlc844fr0dyzss-less-643"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/9bwqjdl4m2yhx5xwnbpp9hf0vdmpx4qk-less-643"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/gir8d4gkfayzadcav5ish23i5bbabcvr-less-643"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/k4k87vw7shf7dgw16k0smqrnkzg52vhz-less-643"
+        }
+      }
+    },
+    "nodejs@20": {
+      "last_modified": "2023-12-13T22:54:10Z",
+      "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#nodejs_20",
+      "source": "devbox-search",
+      "version": "20.10.0",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/rr171p6xks9xf2f0ds9wyi4mc36xm5c1-nodejs-20.10.0"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/hgm5r621kl22fgkb42q1bf9mj7vsydvp-nodejs-20.10.0"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/pq1p13a24628rxwf968nb3pfnpvpfy0r-nodejs-20.10.0"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/yc5bicc5zs5czjp5q5aygz79km84rmd4-nodejs-20.10.0"
+        }
+      }
+    },
+    "vim@latest": {
+      "last_modified": "2023-12-13T22:54:10Z",
+      "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#vim",
+      "source": "devbox-search",
+      "version": "9.0.2116",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/6byibdndn86b7bxxrd6dzy0dfrj3vqvy-vim-9.0.2116"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/vjc111pa075qs3j17f35nw8gv73xj52v-vim-9.0.2116"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/mpbpaphdqn3spg1k75j8spgf0d35ljkr-vim-9.0.2116"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/w9k7cxllh05d8r7hy5j5kf48k80zgfg3-vim-9.0.2116"
+        }
+      }
+    }
+  }
+}
