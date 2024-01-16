@@ -1,4 +1,5 @@
-import { parse } from "csv-parse/sync";
+// import { parse } from "csv-parse/sync";
+import { parse } from "papaparse";
 
 import { Book } from "./book";
 import { Song } from "./song";
@@ -9,10 +10,10 @@ export class ListBooks {
     static regexp = /([A-Za-z]*)(.*)/g;
 
     constructor(books_file: string) {
-        this.books = parse(books_file, {
+        this.books = parse<Book>(books_file, {
             delimiter: ",",
-            columns: ["abbreviation", "full_name"],
-        });
+            header: true,
+        }).data;
     }
 
     get_book_abb(abb_str: string): [number, number] {
@@ -39,20 +40,20 @@ export class ListBooks {
 
 type SongRaw = {
     index: string,
-    name: string,
+    title: string,
 }
 
 export class ListSongs {
     songs: Song[] = [];
 
     constructor(songs_file: string, books: ListBooks) {
-        const result: SongRaw[] = parse(songs_file, {
+        const result = parse<SongRaw>(songs_file, {
             delimiter: ",",
-            columns: ["index", "name"]
-        });
+            header: true,
+        }).data;
         this.songs = result.map(res => {
             const [book_id, num] = books.get_book_abb(res.index);
-            return new Song(book_id, num, res.name, "");
+            return new Song(book_id, num, res.title, "");
         });
     }
 
@@ -67,18 +68,17 @@ export class ListSongs {
 
 type ServiceRaw = {
     date: string,
-    songs: string[]
+    songs: string
 }
 
 export class ListServices {
     services: Service[] = [];
 
     constructor(services_file: string, books: ListBooks, songs: ListSongs) {
-        const result: ServiceRaw[] = parse(services_file, {
+        const result = parse<ServiceRaw>(services_file, {
             delimiter: ",",
-            columns: ["date", "songs"],
-            group_columns_by_name: true,
-        });
+            header: true,
+        }).data;
         this.services = result.map(res => {
             const song_ids = res.songs.split("|").map(song => {
                 const [book_id, num] = books.get_book_abb(song);

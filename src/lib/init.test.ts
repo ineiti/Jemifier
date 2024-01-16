@@ -1,12 +1,16 @@
+import { parse } from "papaparse";
 import { ListBooks, ListServices, ListSongs } from "./init";
 import { Song } from "./song";
+import { Book } from "./book";
 
-const booksTest = 
-`JEM,J'aime l'Eternel
+const booksTest =
+    `abbreviation,full_name
+JEM,J'aime l'Eternel
 JEMKids,J'aime l'Eternel Kids`;
 
-const songsTest = 
-`JEM0001,J'aime l'Eternel
+const songsTest =
+    `index,title
+JEM0001,J'aime l'Eternel
 JEM1018,Une seule Eglise
 JEMKids100,Moi c'est moi`;
 const songsTestClass = [
@@ -16,7 +20,8 @@ const songsTestClass = [
 ]
 
 const servicesTest =
-`20231224,JEM0001|JEMKids100
+    `date,songs
+20231224,JEM0001|JEMKids100
 20231231,JEM1018|JEMKids100`;
 
 describe("List* initialization happy paths", () => {
@@ -30,7 +35,7 @@ describe("List* initialization happy paths", () => {
         const lb = new ListBooks(booksTest);
         const sb = new ListSongs(songsTest, lb);
         expect(sb.songs.length).toBe(songsTestClass.length);
-        for (let i = 0; i < sb.songs.length; i++){
+        for (let i = 0; i < sb.songs.length; i++) {
             expect(sb.songs[i]).toEqual(songsTestClass[i]);
         }
     });
