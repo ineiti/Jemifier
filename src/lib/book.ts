@@ -6,4 +6,8 @@ export class Book {
         this.abbreviation = abbreviation;
         this.full_name = full_name;
     }
+
+    static from_array(fields: string[]): Book {
+        return new Book(fields[0], fields[1]);
+    }
 }

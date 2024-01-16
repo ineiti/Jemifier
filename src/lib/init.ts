@@ -6,7 +6,7 @@ import { Service } from "./service";
 
 export class ListBooks {
     books: Book[] = [];
-    static regexp = /([A-Za-z]*)(.*)/;
+    static regexp = /([A-Za-z]*)(.*)/g;
 
     constructor(books_file: string) {
         this.books = parse(books_file, {
@@ -17,7 +17,7 @@ export class ListBooks {
 
     get_book_abb(abb_str: string): [number, number] {
         const index_split = [...abb_str.matchAll(ListBooks.regexp)];
-        if (index_split.length != 1) {
+        if (index_split.length === 0) {
             throw (new Error(`Didn't find result in {res.index}`));
         }
         if (index_split[0].length != 3) {
@@ -76,11 +76,11 @@ export class ListServices {
     constructor(services_file: string, books: ListBooks, songs: ListSongs) {
         const result: ServiceRaw[] = parse(services_file, {
             delimiter: ",",
-            columns: ["date", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs", "songs"],
+            columns: ["date", "songs"],
             group_columns_by_name: true,
         });
         this.services = result.map(res => {
-            const song_ids = res.songs.map(song => {
+            const song_ids = res.songs.split("|").map(song => {
                 const [book_id, num] = books.get_book_abb(song);
                 return songs.find_by_number(book_id, num);
             });
