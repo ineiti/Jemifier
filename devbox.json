@@ -4,7 +4,8 @@
     "nodejs@20",
     "git@latest",
     "vim@latest",
-    "less@latest"
+    "less@latest",
+    "openssh@latest"
   ],
   "shell": {
     "init_hook": [
@@ -19,7 +20,7 @@
   },
   "env": {
     "BUN_INSTALL": "$PWD/.bun",
-    "LS_COLORS": "di=33",
-    "PATH": "$PATH:$PWD/.bun/bin"
+    "LS_COLORS":   "di=33",
+    "PATH":        "$PATH:$PWD/.bun/bin"
   }
 }
