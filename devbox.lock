@@ -38,6 +38,20 @@
         }
       }
     },
+    "hexdump@latest": {
+      "last_modified": "2024-01-14T03:55:27Z",
+      "resolved": "github:NixOS/nixpkgs/dd5621df6dcb90122b50da5ec31c411a0de3e538#hexdump",
+      "source": "devbox-search",
+      "version": "2.39.3",
+      "systems": {
+        "aarch64-linux": {
+          "store_path": "/nix/store/sy5mrnp48w9vfa5762pwpc813jns0vzi-hexdump-util-linux-2.39.3"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/pyjgv544s959f78lvf6dq907zfn8gg2x-hexdump-util-linux-2.39.3"
+        }
+      }
+    },
     "less@latest": {
       "last_modified": "2023-12-13T22:54:10Z",
       "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#less",

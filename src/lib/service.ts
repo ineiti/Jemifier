@@ -3,11 +3,9 @@ import { Song } from "./song";
 
 export class Service {
     date: string;
-    songs: number[];
 
-    constructor(date: string, songs: number[]) {
-        this.date = date;
-        this.songs = songs;
+    constructor(date: string, public songs: number[]) {
+        this.date = `${date.substring(0,4)}-${date.substring(4,6)}-${date.substring(6, 8)}`;
     }
 
     get_songs(songs: ListSongs): Song[] {

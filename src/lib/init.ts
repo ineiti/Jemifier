@@ -1,6 +1,3 @@
-// import { parse } from "csv-parse/sync";
-import { parse } from "papaparse";
-
 import { Book } from "./book";
 import { Song } from "./song";
 import { Service } from "./service";
@@ -10,10 +7,7 @@ export class ListBooks {
     static regexp = /([A-Za-z]*)(.*)/g;
 
     constructor(books_file: string) {
-        this.books = parse<Book>(books_file, {
-            delimiter: ",",
-            header: true,
-        }).data;
+        this.books = JSON.parse(books_file).map((b: any) => new Book(b.abbreviation, b.full_name));
     }
 
     get_book_abb(abb_str: string): [number, number] {
@@ -38,23 +32,11 @@ export class ListBooks {
     }
 }
 
-type SongRaw = {
-    index: string,
-    title: string,
-}
-
 export class ListSongs {
     songs: Song[] = [];
 
     constructor(songs_file: string, books: ListBooks) {
-        const result = parse<SongRaw>(songs_file, {
-            delimiter: ",",
-            header: true,
-        }).data;
-        this.songs = result.map(res => {
-            const [book_id, num] = books.get_book_abb(res.index);
-            return new Song(book_id, num, res.title, "");
-        });
+        this.songs = JSON.parse(songs_file).map((s: any) => new Song(s.book_id, s.number, s.title, s.lyrics));
     }
 
     find_by_number(book_id: number, number: number): number {
@@ -66,25 +48,10 @@ export class ListSongs {
     }
 }
 
-type ServiceRaw = {
-    date: string,
-    songs: string
-}
-
 export class ListServices {
     services: Service[] = [];
 
-    constructor(services_file: string, books: ListBooks, songs: ListSongs) {
-        const result = parse<ServiceRaw>(services_file, {
-            delimiter: ",",
-            header: true,
-        }).data;
-        this.services = result.map(res => {
-            const song_ids = res.songs.split("|").map(song => {
-                const [book_id, num] = books.get_book_abb(song);
-                return songs.find_by_number(book_id, num);
-            });
-            return new Service(res.date, song_ids);
-        })
+    constructor(services_file: string) {
+        this.services = JSON.parse(services_file).map((s: any) => new Service(s.date, s.songs));
     }
 }

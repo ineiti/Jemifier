@@ -5,7 +5,8 @@
     "git@latest",
     "vim@latest",
     "less@latest",
-    "openssh@latest"
+    "openssh@latest",
+    "hexdump@latest"
   ],
   "shell": {
     "init_hook": [

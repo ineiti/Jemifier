@@ -11,7 +11,7 @@ export class DataService {
 
   async list_books(): Promise<ListBooks> {
     if (this._list_books === undefined) {
-      const books_file = await fetch("./assets/books.csv");
+      const books_file = await fetch("./assets/books.json");
       this._list_books = new ListBooks(await books_file.text());
     }
     return this._list_books;
@@ -19,7 +19,7 @@ export class DataService {
 
   async list_songs(): Promise<ListSongs> {
     if (this._list_songs === undefined) {
-      const songs_file = await fetch("./assets/songs.csv");
+      const songs_file = await fetch("./assets/songs.json");
       this._list_songs = new ListSongs(await songs_file.text(), await this.list_books());
     }
     return this._list_songs;
@@ -27,8 +27,8 @@ export class DataService {
 
   async list_services(): Promise<ListServices> {
     if (this._list_services === undefined) {
-      const services_file = await fetch("./assets/services.csv");
-      this._list_services = new ListServices(await services_file.text(), await this.list_books(), await this.list_songs());
+      const services_file = await fetch("./assets/services.json");
+      this._list_services = new ListServices(await services_file.text());
     }
     return this._list_services;
   }

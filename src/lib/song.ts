@@ -1,16 +1,10 @@
 import { ListBooks } from "./init";
 
 export class Song {
-    book_id: number;
-    number: number;
-    title: string;
     lyrics: string;
 
-    constructor(book_id: number, number: number, title: string, lyrics: string) {
-        this.book_id = book_id;
-        this.number = number;
-        this.title = title;
-        this.lyrics = lyrics;
+    constructor(public book_id: number, public number: number, public title: string, lyrics: string) {
+        this.lyrics = lyrics.trim();
     }
 
     get_book_number(books: ListBooks): string {

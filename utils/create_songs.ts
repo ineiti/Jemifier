@@ -35,13 +35,56 @@ async function convertSong(file: string) {
         songs.push(...(await readSongs(books.length - 1, abb, desc.path)));
     }
 
-    const sets = fs.readdirSync(data.sets);
-    const set_first_path = fs.readFileSync(path.join(data.sets, sets[0]), 'utf8');
-    const set_first = await parseStringPromise(set_first_path);
-    // console.dir(set_first.set.slide_groups[0].slide_group);
-    for (const sg of set_first.set.slide_groups[0].slide_group.filter((t: any) => t.$.type == "song")) {
-        console.dir(sg.$.name);
+    const services = await readServices(books, songs, data.sets);
+
+    fs.writeFileSync("../src/assets/books.json", JSON.stringify(books));
+    fs.writeFileSync("../src/assets/songs.json", JSON.stringify(songs));
+    fs.writeFileSync("../src/assets/services.json", JSON.stringify(services));
+}
+
+async function readServices(books: Book[], songs: Song[], sets_dir: string): Promise<Service[]> {
+    const services: Service[] = [];
+
+    const sets = fs.readdirSync(sets_dir);
+    sets.sort();
+    for (const set of sets) {
+        try {
+            const set_first_path = fs.readFileSync(path.join(sets_dir, set), 'utf8');
+            const set_first = await parseStringPromise(set_first_path);
+
+            const songIds = [];
+            for (const sg of set_first.set.slide_groups[0].slide_group.filter((t: any) => t.$.type === "song")) {
+                const regexp = new RegExp(`([^ 0-9]*) ?([0-9]*):?\\s(.*)`); // Regular expression for a single space character
+                const matches = sg.$.name.match(regexp);
+                if (matches === null) {
+                    if (sg.$.name !== "Texte_vide") {
+                        console.warn(`Couldn't find match for ${sg.$.name}`);
+                    }
+                    continue;
+                }
+                const [_, bookAbb, songNbrStr, title] = matches;
+                const bookId = books.findIndex((b) => b.abbreviation === bookAbb);
+                if (bookId < 0) {
+                    console.warn(`Didn't find book for song ${bookAbb} - ${songNbrStr} - ${title}`);
+                    continue;
+                }
+                const songNbr = parseInt(songNbrStr);
+                const songId = songs.findIndex((s) => s.book_id === bookId && s.number === songNbr);
+                if (songId < 0) {
+                    console.warn(`Didn't find song in list for ${bookAbb} - ${songNbr} - ${title}`)
+                    continue;
+                }
+                songIds.push(songId);
+                // console.log(`Found ${bookAbb} - ${songNbr} - ${title} for ${sg.$.name}`);
+            }
+            const [date, _] = set.split("_");
+            services.push(new Service(date, songIds))
+        } catch (e) {
+            console.error(`Error while trying to read file ${set}: ${e}`);
+        }
     }
+
+    return services;
 }
 
 async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Promise<Song[]> {
@@ -53,7 +96,9 @@ async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Pr
 
     const regexp = new RegExp(`${bookAbb} ?([0-9]*):?\\s(.*)`); // Regular expression for a single space character
 
-    for (const songFile of fs.readdirSync(songPath)) {
+    const songFiles = fs.readdirSync(songPath);
+    songFiles.sort();
+    for (const songFile of songFiles) {
         const songFilePath = path.join(songPath, songFile);
         if (!fs.statSync(songFilePath).isFile()) {
             console.error(`Found non-file ${songFile}`)
@@ -67,7 +112,8 @@ async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Pr
         }
         // console.log(`${fullTitle} - ${fullTitle.match(regexp)}`);
         try {
-            const [_, songNbr, title] = song.song.title[0].match(regexp);
+            const [_, songNbrStr, title] = song.song.title[0].match(regexp);
+            const songNbr = parseInt(songNbrStr);
             // console.log(`${fullTitle}:: ${songNbr} - ${title}`);
             songs.push(new Song(bookNbr, songNbr, title, song.song.lyrics[0]));
             // break;
