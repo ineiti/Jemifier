@@ -1,6 +1,9 @@
-<h1>Your Preferred Songs</h1>
-<ul>
-  <li>Amazing Grace</li>
-  <li>How Great Thou Art</li>
-  <li>O Holy Night</li>
-</ul>
+<h1>Preferred Songs</h1>
+<div *ngIf="preferred && songs && books">
+  <ul class="song-list">
+    <li *ngFor="let p of preferred?.preferred">
+      <div class="multiplicator">{{ p[1] }}</div> x
+      <a routerLink="/song/{{p[0]}}">{{ songs.songs[p[0]].get_book_number_title(books) }}</a>
+    </li>
+  </ul>
+</div>

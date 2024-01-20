@@ -77,7 +77,8 @@ async function readServices(books: Book[], songs: Song[], sets_dir: string): Pro
                 songIds.push(songId);
                 // console.log(`Found ${bookAbb} - ${songNbr} - ${title} for ${sg.$.name}`);
             }
-            const [date, _] = set.split("_");
+            const [dateStr, _] = set.split("_");
+            const date = `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
             services.push(new Service(date, songIds))
         } catch (e) {
             console.error(`Error while trying to read file ${set}: ${e}`);

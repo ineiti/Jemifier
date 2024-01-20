@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ListBooks, ListServices, ListSongs } from '../lib/init';
+import { ListBooks, ListPreferred, ListServices, ListSongs } from '../lib/init';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ export class DataService {
   private _list_books?: ListBooks;
   private _list_songs?: ListSongs;
   private _list_services?: ListServices;
+  private _preferred_songs?: ListPreferred;
 
   async list_books(): Promise<ListBooks> {
     if (this._list_books === undefined) {
@@ -31,5 +32,12 @@ export class DataService {
       this._list_services = new ListServices(await services_file.text());
     }
     return this._list_services;
+  }
+
+  async list_preferred(): Promise<ListPreferred> {
+    if (this._preferred_songs === undefined){
+      this._preferred_songs = new ListPreferred(await this.list_services());
+    }
+    return this._preferred_songs;
   }
 }

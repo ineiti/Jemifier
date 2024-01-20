@@ -21,8 +21,7 @@ body {
     /* Ensure minimum width for responsive layouts */
     margin: 0 auto;
     /* Center the container horizontally */
-    padding: 20px;
-    background-color: #fff;
+    padding: 20px 20px 0px 0px;
 }
 
 .menu {
@@ -31,6 +30,7 @@ body {
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
+    background-color: #fff;
 }
 
 .menu a {
@@ -39,6 +39,25 @@ body {
     padding: 5px;
 }
 
+.menu {
+    position: fixed;
+    top: 0;
+    // left: 0;
+    width: 80%;
+    // height: 100px;
+    background-color: white;
+}
+
 .router-outlet {
     margin-top: 20px;
+}
+
+.active-menu-item {
+    background-color: #007bff;
+    color: white;
+}
+
+.inactive-menu-item {
+    background-color: #fff;
+    color: #007bff;
 }

@@ -55,3 +55,20 @@ export class ListServices {
         this.services = JSON.parse(services_file).map((s: any) => new Service(s.date, s.songs));
     }
 }
+
+export class ListPreferred {
+    preferred: [number, number][] = [];
+
+    constructor(services: ListServices) {
+        const count = new Map<number, number>();
+        for (const service of services.services) {
+            for (const song of service.songs) {
+                count.set(song, (count.get(song) ?? 0) + 1);
+            }
+        }
+        for (const [s, c] of count){
+            this.preferred.push([s, c]);
+        }
+        this.preferred.sort((a, b) => b[1] - a[1] || a[0] - b[0])
+    }
+}

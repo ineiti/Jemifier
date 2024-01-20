@@ -1,11 +1,17 @@
 <h1>Dates of Religious Services</h1>
 <div *ngIf="list_songs && list_books">
-  <ul>
-    <li *ngFor="let service of services.slice().reverse();">{{ service.date }} -
-      <span *ngFor="let songID of service.songs; last as isLast">
-        <a href="/song/{{songID}}">{{ list_songs!.songs[songID].get_book_number_title(list_books) }}</a>
-        <span *ngIf="!isLast"> - </span>
-      </span>
+  <ul class="song-list">
+    <li *ngFor="let service of services.slice().reverse();">
+      <div class="songs">
+        <div id="{{ service.date }}" style="position: relative; top: -60px; left: 0"></div>
+        <div class="center">{{ service.date }}</div>
+        <span *ngFor="let songID of service.songs; last as isLast">
+          <span class="song">
+            <a routerLink="/song/{{songID}}">{{ list_songs!.songs[songID].get_book_number_title(list_books) }}</a>
+          </span>
+          <span>&nbsp; </span>
+        </span>
+      </div>
     </li>
   </ul>
 </div>

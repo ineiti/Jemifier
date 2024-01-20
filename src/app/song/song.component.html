@@ -7,10 +7,16 @@
     <div *ngIf="song !== undefined">
         <h1>{{ book }} {{ song!.number }} - {{ song!.title }}</h1>
         <h2>Services</h2>
-        <span *ngFor="let service of services.slice().reverse(); last as isLast">
-            {{ service }}
-            <span *ngIf="!isLast"> - </span>
-        </span>
+        <div style="line-height: 2em;">
+            <span *ngFor="let service of services.slice().reverse(); last as isLast">
+                <span class="date">
+                    <a routerLink="/dates" fragment="{{service}}">{{ service }}</a>
+                </span>
+                <span *ngIf="!isLast">&nbsp; </span>
+            </span>
+        </div>
+        <h2>Chosen</h2>
+        This song has been chosen {{ services.length }} times.
         <h2>Keywords</h2>
         <h2>Song lyrics</h2>
         <pre>{{ song!.lyrics }}</pre>
