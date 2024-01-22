@@ -16,36 +16,46 @@ body {
     font-family: sans-serif;
 }
 
-.container {
-    min-width: 320px;
-    /* Ensure minimum width for responsive layouts */
-    margin: 0 auto;
-    /* Center the container horizontally */
-    padding: 20px 20px 0px 0px;
+.top_block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    // margin: 0 auto;
+    // align-items: center;
+    // padding: 5px;
+    width: 100%;
+    background-color: #fff;
+    // border: 12px solid #f00;
 }
 
 .menu {
+    // left: 0;
+    width: 80%;
+    // height: 100px;
+    margin: 0 auto;
+    background-color: white;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
+    // justify-content: space-between;
+    // align-items: center;
+    padding: 10px;
     border-bottom: 1px solid #ccc;
-    background-color: #fff;
+    // background-color: #f00;
 }
 
 .menu a {
     text-decoration: none;
     color: #000;
     padding: 5px;
+    width: 100%;
+    // margin: 0 auto;
+    text-align: center;
+    // background-color: #0ff;
 }
 
-.menu {
-    position: fixed;
-    top: 0;
-    // left: 0;
-    width: 80%;
-    // height: 100px;
-    background-color: white;
+.container {
+    min-width: 320px;
+    margin: 0 auto;
+    padding: 40px 20px 0px 0px;
 }
 
 .router-outlet {

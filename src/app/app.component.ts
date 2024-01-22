@@ -19,12 +19,12 @@ export class AppComponent {
   ngOnInit() {
     // const currentRoute = this.route.snapshot.active;
     this.router.events.subscribe((url) => {
-      console.log("---");
-      console.dir(url);
+      // console.log("---");
+      // console.dir(url);
     });
     const menuItems = document.querySelectorAll('.inactive-menu-item');
     menuItems.forEach((menuItem) => {
-      console.log(menuItem.attributes.getNamedItem('routerLink')!.value);
+      // console.log(menuItem.attributes.getNamedItem('routerLink')!.value);
       //   if (this.route.url) {
       //     menuItem.classList.add('active-menu-item');
       //     menuItem.classList.remove('inactive-menu-item');
