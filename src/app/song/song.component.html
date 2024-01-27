@@ -18,6 +18,13 @@
         <h2>Chosen</h2>
         This song has been chosen {{ services.length }} times.
         <h2>Keywords</h2>
+        <div style="line-height: 2em;">
+        <span *ngFor="let keyword of song.keywords;">
+            <span class="date">
+                <a routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
+                &nbsp;
+            </span>
+        </span></div>
         <h2>Song lyrics</h2>
         <pre>{{ song!.lyrics }}</pre>
     </div>

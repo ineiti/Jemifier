@@ -6,7 +6,10 @@
     "vim@latest",
     "less@latest",
     "openssh@latest",
-    "hexdump@latest"
+    "hexdump@latest",
+    "curl@latest",
+    "jq@latest",
+    "screen@latest"
   ],
   "shell": {
     "init_hook": [

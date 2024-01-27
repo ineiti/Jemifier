@@ -28,6 +28,7 @@ export class SongComponent {
       this.unknown_id = true;
     } else {
       this.song = list_songs.songs[this.songIdInt];
+      console.dir(this.song);
       this.book = (await this.data_component.list_books()).books[this.song!.book_id].abbreviation;
       this.services = (await this.data_component.list_services()).services
         .filter((service) => {

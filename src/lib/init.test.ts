@@ -15,12 +15,12 @@ const songsTest =
     {"book_id":1,"number":196,"title":"Y'en a qui…","lyrics":"Y'en a qui sont petits"},
     {"book_id":1,"number":201,"title":"Mon auto","lyrics":"Mon auto, Jésus la guide, sûrement"}]`;
 const songsTestClass = [
-    new Song(0, 1, "J'aime l'Eternel", "J'aime l'Éternel car Il entend ma voix"),
-    new Song(0, 2, "Quand je vois le ciel", "Quand je vois le ciel, œuvre de tes doigts"),
-    new Song(0, 4, "Éternel! Fais-moi connaître tes voies", "Éternel !  Fais-moi connaître tes voies"),
-    new Song(1, 195, "Voyez de quel amour", "Voyez de quel amour Le Père nous a tous aimés !"),
-    new Song(1, 196, "Y'en a qui…", "Y'en a qui sont petits"),
-    new Song(1, 201, "Mon auto", "Mon auto, Jésus la guide, sûrement")
+    new Song({ book_id: 0, number: 1, title: "J'aime l'Eternel", lyrics: "J'aime l'Éternel car Il entend ma voix" }),
+    new Song({ book_id: 0, number: 2, title: "Quand je vois le ciel", lyrics: "Quand je vois le ciel, œuvre de tes doigts" }),
+    new Song({ book_id: 0, number: 4, title: "Éternel! Fais-moi connaître tes voies", lyrics: "Éternel !  Fais-moi connaître tes voies" }),
+    new Song({ book_id: 1, number: 195, title: "Voyez de quel amour", lyrics: "Voyez de quel amour Le Père nous a tous aimés !" }),
+    new Song({ book_id: 1, number: 196, title: "Y'en a qui…", lyrics: "Y'en a qui sont petits" }),
+    new Song({ book_id: 1, number: 201, title: "Mon auto", lyrics: "Mon auto, Jésus la guide, sûrement" })
 ]
 
 const servicesTest =

@@ -36,7 +36,7 @@ export class ListSongs {
     songs: Song[] = [];
 
     constructor(songs_file: string, books: ListBooks) {
-        this.songs = JSON.parse(songs_file).map((s: any) => new Song(s.book_id, s.number, s.title, s.lyrics));
+        this.songs = JSON.parse(songs_file).map((line: any) => new Song(line));
     }
 
     find_by_number(book_id: number, number: number): number {
