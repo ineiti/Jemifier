@@ -11,5 +11,6 @@ export const routes: Routes = [
     { path: 'dates', component: DatesComponent },
     { path: 'preferred', component: PreferredComponent },
     { path: 'song/:songId', component: SongComponent },
-    { path: 'keyword/:keyword', component: KeywordComponent }
+    { path: 'keyword/:keyword', component: KeywordComponent },
+    { path: 'keywords', component: KeywordComponent }
 ];

@@ -1,4 +1,13 @@
-<div *ngIf="keyword !== undefined">
+<div *ngIf="keyword === undefined; else has_keyword">
+    <h1>Mots clés</h1>
+    <div style="line-height: 2em;">
+        <span *ngFor="let key of keywords">
+            <a class="keyword" routerLink="/keyword/{{key}}">{{key}}</a>
+            &nbsp; 
+        </span>
+    </div>
+</div>
+<ng-template #has_keyword>
     <h1>{{ keyword }}</h1>
     <div style="line-height: 2em;">
         <ul>
@@ -22,4 +31,4 @@
             </li>
         </ul>
     </div>
-</div>
+</ng-template>

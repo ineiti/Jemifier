@@ -9,6 +9,7 @@ export class DataService {
   private _list_songs?: ListSongs;
   private _list_services?: ListServices;
   private _preferred_songs?: ListPreferred;
+  private _keywords?: string[];
 
   async list_books(): Promise<ListBooks> {
     if (this._list_books === undefined) {
@@ -35,9 +36,18 @@ export class DataService {
   }
 
   async list_preferred(): Promise<ListPreferred> {
-    if (this._preferred_songs === undefined){
+    if (this._preferred_songs === undefined) {
       this._preferred_songs = new ListPreferred(await this.list_services());
     }
     return this._preferred_songs;
+  }
+
+  async keywords(): Promise<string[]> {
+    if (this._keywords === undefined) {
+      const keywords_file = await fetch("./assets/keywords.json");
+      this._keywords = JSON.parse(await keywords_file.text());
+      this._keywords?.sort((a,b) => a.localeCompare(b));
+    }
+    return this._keywords!;
   }
 }
