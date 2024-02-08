@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../data.service';
 import { Service } from '../../lib/service';
-import { ListBooks, ListSongs } from '../../lib/init';
+import { ListBooks } from '../../lib/init';
+import { ListSongs } from "../../lib/song";
 import { Router, RouterLink } from '@angular/router';
 
 @Component({

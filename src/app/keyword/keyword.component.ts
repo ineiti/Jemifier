@@ -26,7 +26,7 @@ export class KeywordComponent {
     const listSongs = await this.data_component.list_songs();
     this.listBooks = await this.data_component.list_books();
     const listServices = await this.data_component.list_services();
-    this.keywords = await this.data_component.keywords();
+    this.keywords = (await this.data_component.keywords()).list;
     if (this.keyword !== undefined) {
       this.songIDs = [];
       this.songs = listSongs.songs

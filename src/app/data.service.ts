@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ListBooks, ListPreferred, ListServices, ListSongs } from '../lib/init';
+import { ListBooks, ListPreferred, ListServices } from '../lib/init';
+import { ListSongs } from "../lib/song";
+import { Keywords } from '../lib/keywords';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ export class DataService {
   private _list_songs?: ListSongs;
   private _list_services?: ListServices;
   private _preferred_songs?: ListPreferred;
-  private _keywords?: string[];
+  private _keywords?: Keywords;
 
   async list_books(): Promise<ListBooks> {
     if (this._list_books === undefined) {
@@ -23,6 +25,9 @@ export class DataService {
     if (this._list_songs === undefined) {
       const songs_file = await fetch("./assets/songs.json");
       this._list_songs = new ListSongs(await songs_file.text(), await this.list_books());
+
+      const keywords_file = await fetch("./assets/keywords.json");
+      this._list_songs!.add_keywords(await this.keywords());
     }
     return this._list_songs;
   }
@@ -42,11 +47,10 @@ export class DataService {
     return this._preferred_songs;
   }
 
-  async keywords(): Promise<string[]> {
+  async keywords(): Promise<Keywords> {
     if (this._keywords === undefined) {
       const keywords_file = await fetch("./assets/keywords.json");
-      this._keywords = JSON.parse(await keywords_file.text());
-      this._keywords?.sort((a,b) => a.localeCompare(b));
+      this._keywords = new Keywords(await keywords_file.text());
     }
     return this._keywords!;
   }

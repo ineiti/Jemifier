@@ -1,4 +1,4 @@
-import { ListSongs } from "./init";
+import { ListSongs } from "./song";
 import { Song } from "./song";
 
 export class Service {

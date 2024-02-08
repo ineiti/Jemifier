@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ListBooks, ListPreferred, ListSongs } from '../../lib/init';
+import { ListBooks, ListPreferred } from '../../lib/init';
+import { ListSongs } from "../../lib/song";
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';

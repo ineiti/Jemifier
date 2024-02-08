@@ -1,5 +1,4 @@
 import { Book } from "./book";
-import { Song } from "./song";
 import { Service } from "./service";
 
 export class ListBooks {
@@ -27,22 +26,6 @@ export class ListBooks {
         const id = this.books.findIndex((val) => val.abbreviation === abb);
         if (id === -1) {
             throw new Error("Didn't find this book");
-        }
-        return id;
-    }
-}
-
-export class ListSongs {
-    songs: Song[] = [];
-
-    constructor(songs_file: string, books: ListBooks) {
-        this.songs = JSON.parse(songs_file).map((line: any) => new Song(line));
-    }
-
-    find_by_number(book_id: number, number: number): number {
-        const id = this.songs.findIndex((song) => (song.book_id === book_id && song.number === number));
-        if (id === -1) {
-            throw new Error("Couldn't find song");
         }
         return id;
     }

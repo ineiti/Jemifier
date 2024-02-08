@@ -1,16 +1,16 @@
 import * as fs from 'fs';
 // import { Axios, post } from 'axios';
 import Axios from 'axios';
-import { command, number, positional, run, string } from 'cmd-ts';
-import { Song } from '../src/lib/song';
-import { Book } from '../src/lib/book';
-import { ListBooks, ListSongs } from '../src/lib/init';
+import { command, number, option, positional, run, string } from 'cmd-ts';
+import { ListBooks } from '../src/lib/init';
+import { ListSongs } from "../src/lib/song";
+import { Keywords } from '../src/lib/keywords';
 
 const app = command({
     name: 'get_keywords',
     args: {
         start: positional({ type: number, displayName: 'starting number' }),
-        end: positional({ type: number, displayName: 'ending number' }),
+        end: option({ type: number, long: '--end', short: '-e', defaultValue: () => -1 }),
     },
     handler: ({ start, end }) => {
         request_keywords(start, end);
@@ -23,6 +23,7 @@ async function request_keywords(start: number, end: number) {
     const query_nbr = 5;
     const songs_name = "../src/assets/songs.json";
     const books_name = "../src/assets/books.json";
+    const keywords_name = "../src/assets/keywords.json";
     if (!fs.existsSync(songs_name)) {
         throw new Error(`Didn't find songs at ${songs_name}`);
     }
@@ -32,8 +33,14 @@ async function request_keywords(start: number, end: number) {
 
     const listBooks = new ListBooks(fs.readFileSync(books_name, "utf-8"));
     const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"), listBooks);
+    const listKeywords = new Keywords('{ "list": [], "keywords": []}');
+    listKeywords.list = keywords;
+    listKeywords.list.sort();
 
-    if (end < 0 || start >= listSongs.songs.length) {
+    if (end < 0) {
+        end = listSongs.songs.length;
+    }
+    if (end <= start || start >= listSongs.songs.length) {
         throw new Error("start or end out of bounds");
     }
     for (let songIndex = start; songIndex < end; songIndex++) {
@@ -67,7 +74,7 @@ async function request_keywords(start: number, end: number) {
                         }
                         answers.set(index, (answers.get(index) ?? 0) + nbr_keywords_lm - i);
                     }
-                    if (keywords_unknown.length > 0){
+                    if (keywords_unknown.length > 0) {
                         console.warn(`  Didn't find keywords: ${keywords_unknown}`);
                     }
                 } catch (e) {
@@ -78,13 +85,17 @@ async function request_keywords(start: number, end: number) {
                 .sort((k1, k2) => answers.get(k2)! - answers.get(k1)!)
                 .map((k) => keywords[k]);
             console.log(` [${songIndex}] -> ${sortedKeys}`);
-            listSongs.songs[songIndex].keywords = sortedKeys.slice(0, nbr_keywords);
+            listKeywords.songs.push({
+                book_id: song.book_id,
+                number: song.number,
+                keywords: sortedKeys.slice(0, nbr_keywords)
+            });
         } catch (e) {
             console.error(` ! Error while handling keywords: ${e}`);
             console.dir(song);
         }
     }
-    fs.writeFileSync(songs_name, JSON.stringify(listSongs.songs));
+    fs.writeFileSync(keywords_name, listKeywords.toString());
 }
 
 const nbr_keywords = 5;
@@ -183,7 +194,7 @@ const keywords = [
 ];
 
 function min(a: number, b: number): number {
-    return a < b ? a: b;
+    return a < b ? a : b;
 }
 
 /**
@@ -197,7 +208,7 @@ curl https://api.openai.com/v1/chat/completions \
     "messages": [
       {
         "role": "system",
-        "content": "You are a helpful assistant."
+        "content": "You are a helpful assistant. Follow the instructions given to the best of your abilities."
       },
       {
         "role": "user",
