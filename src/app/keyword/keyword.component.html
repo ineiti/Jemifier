@@ -9,11 +9,5 @@
 </div>
 <ng-template #has_keyword>
     <h1>{{ keyword }}</h1>
-    <div style="line-height: 2em;">
-        <ul>
-            <li *ngFor="let song of songs">
-                <app-song-entry [song]="song"></app-song-entry>
-            </li>
-        </ul>
-    </div>
+    <app-song-list [songs]="songs"></app-song-list>
 </ng-template>

@@ -1,0 +1,7 @@
+<div style="line-height: 2em;">
+    <ul>
+        <li *ngFor="let song of songs">
+            <app-song-entry [song]="song" [listBooks]="listBooks" [listServices]="listServices"></app-song-entry>
+        </li>
+    </ul>
+</div>

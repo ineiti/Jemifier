@@ -3,15 +3,15 @@ import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Song } from '../../lib/song';
-import { ListBooks, ListServices } from '../../lib/init';
 import { SongEntryComponent } from "../song-entry/song-entry.component";
+import { SongListComponent } from "../song-list/song-list.component";
 
 @Component({
     selector: 'app-keyword',
     standalone: true,
     templateUrl: './keyword.component.html',
     styleUrl: './keyword.component.scss',
-    imports: [CommonModule, RouterLink, SongEntryComponent]
+    imports: [CommonModule, RouterLink, SongEntryComponent, SongListComponent]
 })
 export class KeywordComponent {
   @Input() keyword = "";
