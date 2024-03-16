@@ -1,27 +1,51 @@
 # Jemifier
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
+Ce projet a été créé pour améliorer le très bon site jemaf.fr pour chercher et choisir les chants du JEM.
+Une partie importante est le lien avec les chants choisis les autres dimanches.
+Pour ceci, jemifier peut importer les fichiers XMLs créés par le logiciel utilisé par la
+chapelle de Chavannes.
 
-## Development server
+Jemifier est un site web statique. 
+Ca veut dire qu'on peut le mettre sur un serveur très simple, et qu'on n'a pas besoin d'ajouter un
+"backend server" pour une API.
+Au démarrage, le client reçoit toutes les informations: les chants et les listes des chants des différents
+cultes.
+Après c'est le client qui va faire le tri.
+L'avantage est que c'est plus rapide, que le serveur n'apprend rien sur les clients, et que le serveur
+peut rester bien plus simple.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Démarrage
 
-## Code scaffolding
+Pour un démarrage local, il faut installer [devbox](https://www.jetpack.io/devbox) et puis lancer
+le serveur ainsi:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+devbox run start
+```
 
-## Build
+L'utilisation de `devbox` permet d'utiliser la bonne version de `bun`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Développement
 
-## Running unit tests
+Si vous voulez participer au développement, il est plus facile de faire comme suite:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+devbox shell --pure
+```
 
-## Running end-to-end tests
+Et puis vous pouvez utiliser les commandes comme `bun install package_name` et autres pour
+faire du développement.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# TODO
 
-## Further help
+- faire un composant pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
+- augmenter la vitesse de la recherche en montrant d'abord les titres des chants, puis les mots clés, et finalement
+les contenus des chants
+- faire des listes de chants et les exporter
+- ajouter une vue pour un seul culte avec les chansons de cette date
+- mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# CHANGELOG
+
+2024-03-16:
+- faire un composant pour afficher une entrée de chant

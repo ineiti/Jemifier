@@ -11,23 +11,8 @@
     <h1>{{ keyword }}</h1>
     <div style="line-height: 2em;">
         <ul>
-            <li *ngFor="let song of songs; index as i">
-                <a routerLink="/song/{{songIDs[i]}}">{{ song.get_book_number_title(listBooks!) }}</a> -
-                <span *ngIf="services[i].length > 0; else none">
-                    {{ services[i].length }} fois:
-                    <span *ngFor="let service of services[i].reverse(); last as isLast">
-                        <span class="date">
-                            <a routerLink="/dates" fragment="{{service}}">{{ service }}</a>
-                        </span>
-                        <span *ngIf="!isLast">&nbsp; </span>
-                    </span>
-                </span>
-                <ng-template #none>jamais</ng-template>
-                <br>
-                <span *ngFor="let keyword of song.keywords">
-                    <a class="keyword" routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
-                    &nbsp;
-                </span>
+            <li *ngFor="let song of songs">
+                <app-song-entry [song]="song"></app-song-entry>
             </li>
         </ul>
     </div>

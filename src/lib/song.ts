@@ -7,7 +7,7 @@ export class Song {
     title: string;
     lyrics: string;
     keywords: string[] = [];
-    constructor(line: any) {
+    constructor(public song_id: number, line: any) {
         this.book_id = line.book_id;
         this.number = line.number;
         this.title = line.title;
@@ -27,7 +27,7 @@ export class ListSongs {
     songs: Song[] = [];
 
     constructor(songs_file: string, books: ListBooks) {
-        this.songs = JSON.parse(songs_file).map((line: any) => new Song(line));
+        this.songs = JSON.parse(songs_file).map((line: any, i: number) => new Song(i, line));
     }
 
     add_keywords(keywords: Keywords) {
