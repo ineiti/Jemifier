@@ -49,24 +49,37 @@ export class ListSongs {
         return id;
     }
 
-    search(text: string): SongSearch {
-        const ss: SongSearch = {
-            numbers: new SongSearchResult(),
-            titles: new SongSearchResult(),
-            lyrics: new SongSearchResult(),
-            keywords: new SongSearchResult(),
-        };
+    searchAny(text: string, conv: (s: Song) => string): SongSearchResult {
+        const res = new SongSearchResult();
         for (const song of this.songs) {
-            if (song.number === null) {
-                console.dir(song);
-                continue;
-            }
-            ss.numbers.addMatch(song, song.number.toString(), text);
-            ss.titles.addMatch(song, song.title, text);
-            ss.lyrics.addMatch(song, song.lyrics, text);
-            ss.keywords.addMatch(song, (song.keywords ?? []).join(" "), text);
+            res.addMatch(song, conv(song), text);
         }
-        return ss;
+        return res;
+    }
+
+    searchNumbers(text: string): SongSearchResult {
+        return this.searchAny(text, (s) => (s.number ?? 0).toString());
+    }
+
+    searchTitles(text: string): SongSearchResult {
+        return this.searchAny(text, (s) => s.title);
+    }
+
+    searchLyrics(text: string): SongSearchResult {
+        return this.searchAny(text, (s) => s.lyrics);
+    }
+
+    searchKeywords(text: string): SongSearchResult {
+        return this.searchAny(text, (s) => (s.keywords ?? []).join(" "));
+    }
+
+    search(text: string): SongSearch {
+        return {
+            numbers: this.searchNumbers(text),
+            titles: this.searchTitles(text),
+            lyrics: this.searchLyrics(text),
+            keywords: this.searchKeywords(text),
+        }
     }
 }
 
@@ -74,18 +87,36 @@ class SongSearchResult {
     exact: Song[] = [];
     partial: Song[] = [];
 
+    partialMatch(base: string, search: string): boolean {
+        if (base.length < search.length) {
+            return false;
+        }
+        for (let i = 0; i < search.length; i++) {
+            if (base[i].localeCompare(search[i], 'fr', { sensitivity: 'base' }) !== 0) {
+                return false
+            }
+        }
+        return true;
+    }
+
     addMatch(song: Song, source: string, search: string) {
         if (source.localeCompare(search, 'fr', { sensitivity: 'base' }) === 0) {
+            this.exact.push(song);
             return;
+        }
+        if (search.includes(" ")) {
+            if (this.partialMatch(source, search)) {
+                this.partial.push(song);
+                return;
+            }
         }
 
         let partial = false;
         for (const word of source.split(" ")) {
             if (word.localeCompare(search, 'fr', { sensitivity: 'base' }) === 0) {
-                if (word.length === search.length) {
-                    this.exact.push(song);
-                    return;
-                }
+                this.exact.push(song);
+                return;
+            } else if (this.partialMatch(word, search)) {
                 partial = true;
             }
         }

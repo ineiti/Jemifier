@@ -13,6 +13,19 @@ export class DataService {
   private _preferred_songs?: ListPreferred;
   private _keywords?: Keywords;
 
+  constructor(){
+    this.load_all();
+  }
+
+  async load_all(){
+    await this.list_books();
+    await this.list_songs();
+    await this.list_services();
+    await this.list_preferred();
+    await this.keywords();
+    console.log("Got everthing");
+  }
+
   async list_books(): Promise<ListBooks> {
     if (this._list_books === undefined) {
       const books_file = await fetch("./assets/books.json");
@@ -34,6 +47,7 @@ export class DataService {
 
   async list_services(): Promise<ListServices> {
     if (this._list_services === undefined) {
+      console.log("Getting services");
       const services_file = await fetch("./assets/services.json");
       this._list_services = new ListServices(await services_file.text());
     }

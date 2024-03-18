@@ -3,7 +3,7 @@
 <div style="width: 80%;">
   <div class="input-group">
     <input class="form-control" #search placeholder="Chercher dans le numéro, nom, texte, ou mots clés" type="text"
-    (input)="getValue($event)">
+      (input)="getValue($event)">
     <span class="input-group-btn">
       <a class="btn" style="color: rgb(204, 204, 204); text-decoration: none; " href="#clear">
         <i class="glyphicon glyphicon-remove"></i>
@@ -17,7 +17,6 @@
 <div *ngIf="results.length > 0">
   <h2>Résultats</h2>
   <ul>
-    <li *ngFor="let result of results">{{ result.get_book_number_title(books!) }}</li>
+    <app-song-list [songs]="results"></app-song-list>
   </ul>
 </div>
-

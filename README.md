@@ -38,17 +38,24 @@ faire du développement.
 
 # TODO
 
-- faire un composant pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
-- augmenter la vitesse de la recherche en montrant d'abord les titres des chants, puis les mots clés, et finalement
-les contenus des chants
 - faire des listes de chants et les exporter
+- ajouter des liens sur jemaf.fr et/ou youtube
+- mettre le tab et/ou le # du chant dans le titre
+- on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
+- améliorer la recherche en cherchant les lyrics seulement par groupe de 200 chants
+- améliorer les résultats des recherches en cherchant plusieurs mots séparés par des espaces en AND
+- éditer les paroles des chants
+- faire un composant pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
 - ajouter une vue pour un seul culte avec les chansons de cette date
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
 
 2024-03-18:
+- augmenter la vitesse de la recherche en montrant d'abord les titres des chants, puis les mots clés, et finalement
+les contenus des chants
 - faire un composant pour afficher une liste de chants
+- utiliser le composant "app-song-list" pour la recherche
 
 2024-03-16:
 - faire un composant pour afficher une entrée de chant
