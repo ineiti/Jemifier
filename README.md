@@ -42,8 +42,9 @@ faire du développement.
 - ajouter des liens sur jemaf.fr et/ou youtube
 - mettre le tab et/ou le # du chant dans le titre
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
-- améliorer la recherche en cherchant les lyrics seulement par groupe de 200 chants
 - améliorer les résultats des recherches en cherchant plusieurs mots séparés par des espaces en AND
+- réflechir comment bien faire pour intégrer les résultats partiels même s'il y a des résultats exacts
+- bien traduire tout l'interface
 - éditer les paroles des chants
 - faire un composant pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
 - ajouter une vue pour un seul culte avec les chansons de cette date
@@ -52,6 +53,7 @@ faire du développement.
 # CHANGELOG
 
 2024-03-18:
+- améliorer la recherche en cherchant les lyrics seulement par groupe de 200 chants
 - augmenter la vitesse de la recherche en montrant d'abord les titres des chants, puis les mots clés, et finalement
 les contenus des chants
 - faire un composant pour afficher une liste de chants

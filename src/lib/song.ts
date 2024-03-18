@@ -49,9 +49,9 @@ export class ListSongs {
         return id;
     }
 
-    searchAny(text: string, conv: (s: Song) => string): SongSearchResult {
+    searchAny(text: string, conv: (s: Song) => string, start = 0, end = -1): SongSearchResult {
         const res = new SongSearchResult();
-        for (const song of this.songs) {
+        for (const song of this.songs.slice(start, end)) {
             res.addMatch(song, conv(song), text);
         }
         return res;
@@ -65,8 +65,8 @@ export class ListSongs {
         return this.searchAny(text, (s) => s.title);
     }
 
-    searchLyrics(text: string): SongSearchResult {
-        return this.searchAny(text, (s) => s.lyrics);
+    searchLyrics(text: string, start = 0, end = -1): SongSearchResult {
+        return this.searchAny(text, (s) => s.lyrics, start, end);
     }
 
     searchKeywords(text: string): SongSearchResult {
@@ -83,7 +83,7 @@ export class ListSongs {
     }
 }
 
-class SongSearchResult {
+export class SongSearchResult {
     exact: Song[] = [];
     partial: Song[] = [];
 
@@ -124,11 +124,16 @@ class SongSearchResult {
             this.partial.push(song);
         }
     }
+
+    append(s: SongSearchResult){
+        this.exact = this.exact.concat(s.exact);
+        this.partial = this.partial.concat(s.partial);
+    }
 }
 
-interface SongSearch {
-    numbers: SongSearchResult,
-    titles: SongSearchResult,
-    lyrics: SongSearchResult,
-    keywords: SongSearchResult,
+export class SongSearch {
+    numbers = new SongSearchResult();
+    titles = new SongSearchResult();
+    lyrics = new SongSearchResult();
+    keywords = new SongSearchResult();
 }
