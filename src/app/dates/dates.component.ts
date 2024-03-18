@@ -16,12 +16,10 @@ import { SongListComponent } from "../song-list/song-list.component";
 })
 export class DatesComponent {
   list_services?: ListServices;
-  list_books?: ListBooks;
   list_songs?: ListSongs;
   constructor(private data_component: DataService, private router: Router) { }
 
   async ngOnInit() {
-    this.list_books = await this.data_component.list_books();
     this.list_songs = await this.data_component.list_songs();
     this.list_services = await this.data_component.list_services();
 

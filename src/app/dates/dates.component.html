@@ -1,17 +1,11 @@
 <h1>Dates des cultes</h1>
-<div *ngIf="list_songs && list_books && list_services">
+<div *ngIf="list_songs && list_services">
   <ul class="song-list">
     <li *ngFor="let service of list_services!.services.slice().reverse().slice(0);">
       <div class="songs">
         <div id="{{ service.date }}" style="position: relative; top: -60px; left: 0"></div>
         <div class="center">{{ service.date }}</div>
-        <app-song-list [songs]="service.get_songs(list_songs)" [listBooks]="list_books" [listServices]="list_services!"></app-song-list>
-        <!-- <span *ngFor="let songID of service.songs; last as isLast">
-          <span class="song">
-            <a routerLink="/song/{{songID}}">{{ list_songs!.songs[songID].get_book_number_title(list_books) }}</a>
-          </span>
-          <span>&nbsp; </span>
-        </span> -->
+        <app-song-list [songs]="service.get_songs(list_songs)"></app-song-list>
       </div>
     </li>
   </ul>

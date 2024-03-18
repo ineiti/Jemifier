@@ -15,14 +15,16 @@ import { Service } from '../../lib/service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SongEntryComponent {
-  @Input() listBooks!: ListBooks;
-  @Input() listServices!: ListServices;
+  listBooks!: ListBooks;
+  listServices!: ListServices;
   @Input() song!: Song;
   services?: string[];
 
   constructor(private data_component: DataService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.listBooks = await this.data_component.list_books();
+    this.listServices = await this.data_component.list_services();
     this.services = this.listServices
       .services
       .filter((service) => service.songs.includes(this.song!.song_id))

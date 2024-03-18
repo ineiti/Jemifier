@@ -13,6 +13,4 @@ import { ListBooks, ListServices } from '../../lib/init';
 })
 export class SongListComponent {
   @Input() songs: Song[] = [];
-  @Input() listBooks!: ListBooks;
-  @Input() listServices!: ListServices;
 }

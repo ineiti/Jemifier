@@ -47,5 +47,8 @@ les contenus des chants
 
 # CHANGELOG
 
+2024-03-18:
+- faire un composant pour afficher une liste de chants
+
 2024-03-16:
 - faire un composant pour afficher une entrée de chant
