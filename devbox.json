@@ -19,6 +19,9 @@
     "scripts": {
       "start": [
         "bun start"
+      ],
+      "build": [
+        "bun run build"
       ]
     }
   },
