@@ -23,7 +23,7 @@ export class ListBooks {
     }
 
     find_book(abb: string): number {
-        const id = this.books.findIndex((val) => val.abbreviation === abb);
+        const id = this.books.findIndex((val) => val.abbreviation.localeCompare(abb, 'fr', { sensitivity: 'base' }) === 0);
         if (id === -1) {
             throw new Error("Didn't find this book");
         }
@@ -49,7 +49,7 @@ export class ListPreferred {
                 count.set(song, (count.get(song) ?? 0) + 1);
             }
         }
-        for (const [s, c] of count){
+        for (const [s, c] of count) {
             this.preferred.push([s, c]);
         }
         this.preferred.sort((a, b) => b[1] - a[1] || a[0] - b[0])

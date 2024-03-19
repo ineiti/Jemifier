@@ -1,9 +1,11 @@
-<h1>Chansons préférés</h1>
+<h1>Chansons préférées</h1>
 <div *ngIf="preferred && songs && books">
   <ul class="song-list">
     <li *ngFor="let p of preferred?.preferred">
-      <div class="multiplicator">{{ p[1] }}</div> x
-      <a routerLink="/song/{{p[0]}}">{{ songs.songs[p[0]].get_book_number_title(books) }}</a>
+      <div style="display: flex">
+        <div class="multiplicator">{{ p[1] }}</div> &nbsp;x&nbsp;
+        <app-song-entry [song]="songs.songs[p[0]]"></app-song-entry>
+      </div>
     </li>
   </ul>
 </div>

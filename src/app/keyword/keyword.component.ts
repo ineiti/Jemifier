@@ -7,11 +7,11 @@ import { SongEntryComponent } from "../song-entry/song-entry.component";
 import { SongListComponent } from "../song-list/song-list.component";
 
 @Component({
-    selector: 'app-keyword',
-    standalone: true,
-    templateUrl: './keyword.component.html',
-    styleUrl: './keyword.component.scss',
-    imports: [CommonModule, RouterLink, SongEntryComponent, SongListComponent]
+  selector: 'app-keyword',
+  standalone: true,
+  templateUrl: './keyword.component.html',
+  styleUrl: './keyword.component.scss',
+  imports: [CommonModule, RouterLink, SongEntryComponent, SongListComponent]
 })
 export class KeywordComponent {
   @Input() keyword = "";
@@ -21,8 +21,10 @@ export class KeywordComponent {
   constructor(private data_component: DataService) { }
 
   async ngOnChanges() {
+    document.title = "Jemifier - mots clés";
     const listSongs = await this.data_component.list_songs();
-    this.keywords = (await this.data_component.keywords()).list;
+    this.keywords = (await this.data_component.keywords()).list.map((k) => k.replace('-', '&#8209;'));
+    this.keywords.sort((a, b) => a.localeCompare(b));
     if (this.keyword !== undefined) {
       this.songs = listSongs.songs
         .filter((s, i) => s.keywords.includes(this.keyword))

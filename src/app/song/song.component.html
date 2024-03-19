@@ -10,7 +10,7 @@
         <div style="line-height: 2em;">
             <span *ngFor="let service of services.slice().reverse(); last as isLast">
                 <span class="date">
-                    <a routerLink="/dates" fragment="{{service}}">{{ service }}</a>
+                    <a routerLink="/dates/{{service}}">{{ service }}</a>
                 </span>
                 <span *ngIf="!isLast">&nbsp; </span>
             </span>

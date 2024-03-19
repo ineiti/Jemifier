@@ -40,7 +40,6 @@ faire du développement.
 
 - faire des listes de chants et les exporter
 - ajouter des liens sur jemaf.fr et/ou youtube
-- mettre le tab et/ou le # du chant dans le titre
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - améliorer les résultats des recherches en cherchant plusieurs mots séparés par des espaces en AND
 - réflechir comment bien faire pour intégrer les résultats partiels même s'il y a des résultats exacts
@@ -51,6 +50,15 @@ faire du développement.
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-03-19:
+- mettre le tab et/ou le # du chant dans le titre
+- plusieurs petites améliorations
+  - utiliser song-entry partout
+  - mise à jour correcte des dates
+  - montrer "loading" jusqu'à ce que tous les données sont chargées
+  - augmenter la taille des mots clés, et éviter qu'ils se cassent
+  - avoir le livre et # de chants dans l'URL des "/song"
 
 2024-03-18:
 - améliorer la recherche en cherchant les lyrics seulement par groupe de 200 chants

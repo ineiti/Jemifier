@@ -14,8 +14,8 @@ export class Song {
         this.lyrics = line.lyrics.trim();
     }
 
-    get_book_number(books: ListBooks): string {
-        return `${books.books[this.book_id].abbreviation} ${this.number}`;
+    get_book_number(books: ListBooks, separator = " "): string {
+        return `${books.books[this.book_id].abbreviation}${separator}${this.number}`;
     }
 
     get_book_number_title(books: ListBooks): string {
@@ -125,7 +125,7 @@ export class SongSearchResult {
         }
     }
 
-    append(s: SongSearchResult){
+    append(s: SongSearchResult) {
         this.exact = this.exact.concat(s.exact);
         this.partial = this.partial.concat(s.partial);
     }

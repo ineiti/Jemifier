@@ -1,10 +1,10 @@
 <div *ngIf="services !== undefined">
-    <a routerLink="/song/{{song!.song_id}}">{{ song!.get_book_number_title(listBooks!) }}</a> -
+    <a routerLink="/song/{{song!.get_book_number(listBooks, '-')}}">{{ song!.get_book_number_title(listBooks!) }}</a> -
     <span *ngIf="services!.length > 0; else none">
         {{ services!.length }} fois:
         <span *ngFor="let service of services!.slice().reverse(); last as isLast">
             <span class="date">
-                <a routerLink="/dates" fragment="{{service}}">{{ service }}</a>
+                <a routerLink="/dates/{{service}}">{{ service }}</a>
             </span>
             <span *ngIf="!isLast">&nbsp; </span>
         </span>

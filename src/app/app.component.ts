@@ -13,10 +13,13 @@ import { DataService } from './data.service';
 })
 export class AppComponent {
   title = 'Jemifier';
+  loaded = false;
 
   constructor(private router: Router, private data_component: DataService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.data_component.load_all();
+    this.loaded = true;
     // const currentRoute = this.route.snapshot.active;
     this.router.events.subscribe((url) => {
       // console.log("---");

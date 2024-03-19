@@ -9,6 +9,7 @@ export const routes: Routes = [
     { path: '',   redirectTo: '/search', pathMatch: 'full' },
     { path: 'search', component: SearchComponent },
     { path: 'dates', component: DatesComponent },
+    { path: 'dates/:date', component: DatesComponent },
     { path: 'preferred', component: PreferredComponent },
     { path: 'song/:songId', component: SongComponent },
     { path: 'keyword/:keyword', component: KeywordComponent },

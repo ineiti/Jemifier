@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../data.service';
 import { Service } from '../../lib/service';
@@ -15,18 +15,20 @@ import { SongListComponent } from "../song-list/song-list.component";
     imports: [CommonModule, RouterLink, SongListComponent]
 })
 export class DatesComponent {
+  @Input() date?: string;
   list_services?: ListServices;
   list_songs?: ListSongs;
   constructor(private data_component: DataService, private router: Router) { }
 
-  async ngOnInit() {
+  async ngOnChanges(){
     this.list_songs = await this.data_component.list_songs();
     this.list_services = await this.data_component.list_services();
 
-    const hash = window.location.hash;
-    if (hash !== null) {
+    document.title = "Jemifier - dates";
+    if (this.date !== undefined) {
+      document.title = `Jemifier - ${this.date}`;
       setTimeout(() => {
-        const targetElement = document.getElementById(hash.slice(1));
+        const targetElement = document.getElementById(this.date!);
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }

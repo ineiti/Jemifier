@@ -1,5 +1,5 @@
 <body>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet" />
   <div class="top_block">
     <div class="menu">
       <a routerLink="/search" class="inactive-menu-item">Recherche</a>
@@ -9,7 +9,12 @@
     </div>
   </div>
 
-  <div class="container">
+  <div *ngIf="loaded; else loading" class="container">
     <router-outlet></router-outlet>
   </div>
+  <ng-template #loading>
+    <div class="container">
+      <h2>Loading data</h2>
+    </div>
+  </ng-template>
 </body>

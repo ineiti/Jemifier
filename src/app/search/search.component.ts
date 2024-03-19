@@ -25,6 +25,7 @@ export class SearchComponent {
   constructor(private dataService: DataService) { }
 
   async ngOnInit() {
+    document.title = "Jemifier - recherche"
     this.songs = await this.dataService.list_songs();
     this.books = await this.dataService.list_books();
 

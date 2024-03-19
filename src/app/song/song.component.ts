@@ -14,7 +14,7 @@ import { RouterLink } from '@angular/router';
 export class SongComponent {
   @Input() songId = "unknown";
   songIdInt = 0;
-  unknown_id = false;
+  unknown_id = true;
   song?: Song;
   book: string = "";
   services: string[] = [];
@@ -22,19 +22,26 @@ export class SongComponent {
   constructor(private data_component: DataService) { }
 
   async ngOnChanges() {
-    this.songIdInt = parseInt(this.songId);
-    const list_songs = await this.data_component.list_songs();
-    if (this.songIdInt < 0 || this.songIdInt >= list_songs.songs.length) {
-      this.unknown_id = true;
-    } else {
-      this.song = list_songs.songs[this.songIdInt];
+    const [bookId, songNbr] = this.songId.split("-");
+    if (bookId === undefined || songNbr === undefined) {
+      return;
+    }
+
+    try {
+      const list_books = await this.data_component.list_books();
+      const book = list_books.find_book(bookId);
+      const list_songs = await this.data_component.list_songs();
+      this.song = list_songs.songs[list_songs.find_by_number(book, parseInt(songNbr))];
       console.dir(this.song);
-      this.book = (await this.data_component.list_books()).books[this.song!.book_id].abbreviation;
+      this.book = list_books.books[this.song!.book_id].abbreviation;
       this.services = (await this.data_component.list_services()).services
         .filter((service) => {
-          return service.songs.includes(this.songIdInt);
+          return service.songs.includes(this.song?.song_id ?? -1);
         })
         .map((service) => { return service.date });
+      this.unknown_id = false;
+    } catch {
+      return;
     }
   }
 }
