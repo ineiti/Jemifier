@@ -62,7 +62,7 @@ async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Pr
             const [_, songNbrStr, title] = song.song.title[0].match(regexp);
             const songNbr = parseInt(songNbrStr);
             // console.log(`${fullTitle}:: ${songNbr} - ${title}`);
-            songs.push(new Song({ book_id: bookNbr, number: songNbr, title: title, lyrics: song.song.lyrics[0] }));
+            songs.push(new Song(-1, { book_id: bookNbr, number: songNbr, title: title, lyrics: song.song.lyrics[0] }));
             // break;
         } catch (e) {
             console.log(`While parsing ${fullTitle}, got error ${e}`);

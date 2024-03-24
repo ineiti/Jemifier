@@ -22,6 +22,16 @@
       ],
       "build": [
         "bun run build"
+      ],
+      "build_npm": [
+        "npm run build"
+      ],
+      "update": [
+	"cd utils",
+	"bun create_songs.ts config.yaml",
+	"bun create_services.ts config.yaml",
+        "ssh hosting 'cd data/sites/gasser.blue/jemifier && git pull && devbox run build_npm'",
+	"scp ../src/assets/*.json hosting:data/sites/gasser.blue/jemifier/dist/jemifier/browser/assets"
       ]
     }
   },
