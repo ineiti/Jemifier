@@ -1,12 +1,10 @@
 <h1>Dates des cultes</h1>
 <div *ngIf="list_songs && list_services">
   <ul class="song-list">
-    <li *ngFor="let service of list_services!.services.slice().reverse().slice(0);">
-      <div class="songs">
-        <div id="{{ service.date }}" style="position: relative; top: -60px; left: 0"></div>
-        <div class="center">{{ service.date }}</div>
-        <app-song-list [songs]="service.get_songs(list_songs)"></app-song-list>
-      </div>
+    <li *ngFor="let service of list_services!.services.slice().reverse().slice(0);" class="songs">
+      <div id="{{ service.date }}" style="position: relative; top: -60px; left: 0"></div>
+      <div class="center">{{ service.date }}</div>
+      <app-song-list [songs]="service.get_songs(list_songs)"></app-song-list>
     </li>
   </ul>
 </div>

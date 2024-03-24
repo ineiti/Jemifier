@@ -38,10 +38,12 @@ faire du développement.
 
 # TODO
 
+- on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
+- améliorer les résultats d recherches
+  - en cherchant plusieurs mots séparés par des espaces en AND
+  - trouvant "l'esprit" si on entre "esprit"
 - faire des listes de chants et les exporter
 - ajouter des liens sur jemaf.fr et/ou youtube
-- on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
-- améliorer les résultats des recherches en cherchant plusieurs mots séparés par des espaces en AND
 - réflechir comment bien faire pour intégrer les résultats partiels même s'il y a des résultats exacts
 - bien traduire tout l'interface
 - éditer les paroles des chants
@@ -50,6 +52,9 @@ faire du développement.
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-03-24:
+- CSS pour téléphones mobiles
 
 2024-03-19:
 - mettre le tab et/ou le # du chant dans le titre

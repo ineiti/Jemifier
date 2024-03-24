@@ -2,12 +2,17 @@
 
 .songs {
     display: block;
-    // width: 80%;
-    padding: 0px 10px 10px 10px;
-    margin: 0 0 20px 0;
-    border: 1px solid #ccc;
     background-color: #fff;
     line-height: 2em;
+    border: 1px solid #ccc;
+}
+
+@media (min-width: 768px) {
+    .songs {
+        padding: 0px 10px 10px 10px;
+        margin: 0 0 20px 0;
+    }
+
 }
 
 .song {
