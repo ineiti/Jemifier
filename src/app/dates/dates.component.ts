@@ -18,7 +18,13 @@ export class DatesComponent {
   @Input() date?: string;
   list_songs?: ListSongs;
   services?: Service[];
+  servicesToShow: Service[] = [];
+  progress = "";
   constructor(private data_component: DataService, private router: Router) { }
+
+  ngOnInit(){
+    console.log("init");
+  }
 
   async ngOnChanges() {
     document.title = "Jemifier - dates";
@@ -27,14 +33,32 @@ export class DatesComponent {
       this.services = (await this.data_component.list_services()).services.slice().reverse().slice(0);
     }
 
-    if (this.date !== undefined) {
-      document.title = `Jemifier - ${this.date}`;
-      setTimeout(() => {
-        const targetElement = document.getElementById(this.date!);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100);
+    this.addServices();
+  }
+
+  addServices() {
+    this.servicesToShow = this.servicesToShow.concat(this.services!.splice(0, 10));
+    this.progress += ".";
+    if (this.services!.length > 0){
+      setTimeout(() => this.addServices(), 10);
+    } else {
+      if (this.date !== undefined) {
+        document.title = `Jemifier - ${this.date}`;
+        setTimeout(() => {
+          const targetElement = document.getElementById(this.date!);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }  
     }
+  }
+
+  trackBy(index: number, service: Service): string {
+    return service.date;
+  }
+
+  async ngOnDestroy() {
+    window.scrollTo(0, 0);
   }
 }

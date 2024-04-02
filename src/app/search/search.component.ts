@@ -19,8 +19,9 @@ export class SearchComponent {
   results: Song[] = [];
   timeouts: any[] = [];
   searchResult = new SongSearch();
-  lyricsSize = 100;
+  lyricsSize = 20;
   timeoutWait = 1;
+  start: number = 0;
 
   constructor(private dataService: DataService) { }
 
@@ -43,9 +44,10 @@ export class SearchComponent {
   getLyrics(text: string, start: number) {
     this.timeouts.push(setTimeout(() => {
       if (start > this.songs!.songs.length) {
+        console.log(Date.now() - this.start);
         return;
       }
-      this.searchResult.lyrics.append(this.songs!.searchLyrics(text, start, start + 200));
+      this.searchResult.lyrics.append(this.songs!.searchLyrics(text, start, start + this.lyricsSize));
       this.updateResults
       this.getLyrics(text, start + this.lyricsSize);
     }, this.timeoutWait));
@@ -70,11 +72,12 @@ export class SearchComponent {
       clearTimeout(t);
     }
     this.timeouts.splice(0);
-    if (text === ""){
+    if (text === "") {
       this.results = [];
       return;
     }
-    
+
+    this.start = Date.now();
     this.searchResult = new SongSearch();
     this.searchResult.numbers = this.songs!.searchNumbers(text);
     this.updateResults();

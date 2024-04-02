@@ -1,7 +1,7 @@
-<h1>Dates des cultes</h1>
-<div *ngIf="list_songs && services; else wait">
+<h1 id="top">Dates des cultes</h1>
+<div *ngIf="list_songs && services && ( services.length === 0 || this.date === undefined); else wait">
   <ul class="song-list">
-    <li *ngFor="let service of services!;" class="songs">
+    <li *ngFor="let service of servicesToShow!; trackBy: trackBy" class="songs">
       <div id="{{ service.date }}" style="position: relative; top: -60px; left: 0"></div>
       <div class="center">{{ service.date }}</div>
       <app-song-list [songs]="service.get_songs(list_songs)"></app-song-list>
@@ -9,5 +9,5 @@
   </ul>
 </div>
 <ng-template #wait>
-  <h2>Création de la liste...</h2>
+  <h2>Création de la liste{{progress}}</h2>
 </ng-template>

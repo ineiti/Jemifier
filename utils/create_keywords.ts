@@ -10,7 +10,7 @@ const app = command({
     name: 'get_keywords',
     args: {
         start: positional({ type: number, displayName: 'starting number' }),
-        end: option({ type: number, long: '--end', short: '-e', defaultValue: () => -1 }),
+        end: option({ type: number, long: 'end', short: 'e', defaultValue: () => -1 }),
     },
     handler: ({ start, end }) => {
         request_keywords(start, end);
@@ -54,7 +54,7 @@ async function request_keywords(start: number, end: number) {
                         { "role": "system", "content": "Below is an instruction that describes a task. Write a response that appropriately completes the request. Do not provide any explanation or further discussion of the text. Just give the result." },
                         { "role": "user", "content": prompt + song.lyrics }
                     ],
-                    "temperature": 0.4,
+                    "temperature": 0.6,
                     "max_tokens": 100,
                     "stream": false
                 };
@@ -79,6 +79,7 @@ async function request_keywords(start: number, end: number) {
                     }
                 } catch (e) {
                     console.error(` ! Error in query: ${e}`);
+                    console.log(response.data.choices[0].message.content);
                 }
             }
             const sortedKeys: string[] = [...answers.keys()]
@@ -100,39 +101,6 @@ async function request_keywords(start: number, end: number) {
 
 const nbr_keywords = 5;
 const nbr_keywords_lm = nbr_keywords * 2;
-
-const prompt = `Pour le chant suivant, donne-moi un JSON avec un tableau des ${nbr_keywords_lm} mots clés 
-les plus utiles pour le décrire. Les ${nbr_keywords_lm} mots doivent être choisis parmi 
-les mots suivants:
-
-Adoration, Appel, Autorité, Bénédiction, Combat spirituel, Confession,
-Consécration, Création, Danse, Deuil, Mort, Dieu, Ecoute, Eglise,
-Engagement, Espérance, Evangélisation, Exhortation, Foi et confiance,
-Grâce, Identité, Intercession, Intimité, Israël, Jésus-Christ,
-Joie, Célébration, Louange, Mission, Passion, Amour, Partage, Père,
-Prière, Proclamation, Prophétique, Reconnaissance, Repentance, Réveil,
-Sacrifice, Sainte Cène, Saint-Esprit, Salut, Trinité, Unité,
-Victoire,
-Gratitude, Vérité, Gloire, Délivrance, Miséricorde, Paix, Sainteté, Pardon
-
-Met le mot qui décrit le chant le mieux d'abord, puis les mots qui décrivent moins bien. 
-Ecris les mots dans un tableau JSON. 
-Utilise seulement des mots de la liste en-haut. 
-Ne donne pas non plus d'explications ou d'autres ajouts. 
-Seulement les ${nbr_keywords_lm} mots que tu as choisis en JSON. 
-Ecris seulement le JSON. 
-Le JSON doit avoir le format suivant:
-
-[ 
-"mot1",
-"mot2",
-"mot3",
-"mot4",
-"mot5"
-]
-
-Voici le chant à analyzer:
-`;
 
 const keywords = [
     // JEM keywords
@@ -176,7 +144,7 @@ const keywords = [
     "repentance",
     "réveil",
     "sacrifice",
-    "sainte cène",
+    "sainte-cène",
     "saint-esprit",
     "salut",
     "trinité",
@@ -190,8 +158,39 @@ const keywords = [
     "miséricorde",
     "paix",
     "sainteté",
-    "pardon"
+    "pardon",
+    "pâques",
+    "noël",
+    "éternel",
+    "espoir",
+    "confiance",
+    "épreuve",
 ];
+
+const prompt = `Pour le chant suivant, donne-moi un JSON avec un tableau des ${nbr_keywords_lm} mots clés 
+les plus utiles pour le décrire. Les ${nbr_keywords_lm} mots doivent être choisis parmi 
+les mots suivants:
+
+${keywords.join(" ")}
+
+Met le mot qui décrit le chant le mieux d'abord, puis les mots qui décrivent moins bien. 
+Ecris les mots dans un tableau JSON. 
+Utilise seulement des mots de la liste en-haut. 
+Ne donne pas non plus d'explications ou d'autres ajouts. 
+Seulement les ${nbr_keywords_lm} mots que tu as choisis en JSON. 
+Ecris seulement le JSON. 
+Le JSON doit avoir le format suivant:
+
+[ 
+"mot1",
+"mot2",
+"mot3",
+"mot4",
+"mot5"
+]
+
+Voici le chant à analyzer:
+`;
 
 function min(a: number, b: number): number {
     return a < b ? a : b;
