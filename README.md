@@ -38,14 +38,6 @@ faire du développement.
 
 # TODO
 
-- améliorer les résultats des recherches
-  - recherche: faire des morceaux plus petits pour être plus rapide
-  - en cherchant plusieurs mots séparés par des espaces en AND
-  - trouvant "l'esprit" si on entre "esprit"
-  = modifier la recherche: ListSongs.search(str: string, start: number, end: number): SearchResult[]
-    - SearchResult{ song: Song, match: number}
-    - `match` est 4 pour un match numéro, 3 pour un match keyword, 2 pour un match titre, 1 pour un match texte
-    - `match` peut être négatif pour un match partiel
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
 - faire des listes de chants et les exporter
@@ -58,6 +50,15 @@ faire du développement.
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-04-03:
+- améliorer les résultats des recherches
+  - recherche: faire des morceaux plus petits pour être plus rapide
+  - en cherchant plusieurs mots séparés par des espaces en AND
+  - trouvant "l'esprit" si on entre "esprit"
+  = modifier la recherche: ListSongs.search(str: string, start: number, end: number): SearchResult[]
+    - SearchResult{ song: Song, match: number}
+    - `match` est 4 pour un match numéro, 3 pour un match keyword, 2 pour un match titre, 1 pour un match texte
 
 2024-04-02:
 - update keywords

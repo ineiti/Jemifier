@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
-import { ListSongs, Song, SongSearch, SongSearchResult } from "../../lib/song";
+import { ListSongs, SearchResult, Song } from "../../lib/song";
 import { ListBooks } from '../../lib/init';
 import { CommonModule } from '@angular/common';
 import { SongListComponent } from '../song-list/song-list.component';
@@ -16,10 +16,10 @@ export class SearchComponent {
   @ViewChild('search') searchElement?: ElementRef;
   songs?: ListSongs;
   books?: ListBooks;
+  search_results: SearchResult[] = [];
   results: Song[] = [];
   timeouts: any[] = [];
-  searchResult = new SongSearch();
-  lyricsSize = 20;
+  lyricsSize = 100;
   timeoutWait = 1;
   start: number = 0;
 
@@ -37,33 +37,16 @@ export class SearchComponent {
     });
   }
 
-  addResults(songs: Song[]) {
-    this.results = this.results.concat(songs.filter((s) => !this.results.includes(s)));
-  }
-
   getLyrics(text: string, start: number) {
     this.timeouts.push(setTimeout(() => {
       if (start > this.songs!.songs.length) {
-        console.log(Date.now() - this.start);
         return;
       }
-      this.searchResult.lyrics.append(this.songs!.searchLyrics(text, start, start + this.lyricsSize));
-      this.updateResults
+      this.search_results = this.search_results.concat(this.songs!.search_matches(text, start, start + this.lyricsSize));
+      this.search_results.sort((a, b) => b.score - a.score);
+      this.results = this.search_results.map((sr) => sr.song);
       this.getLyrics(text, start + this.lyricsSize);
     }, this.timeoutWait));
-  }
-
-  updateResults() {
-    this.results = this.searchResult.numbers.exact;
-    this.addResults(this.searchResult.keywords.exact);
-    this.addResults(this.searchResult.titles.exact);
-    this.addResults(this.searchResult.lyrics.exact);
-    if (this.results.length === 0) {
-      this.results = this.searchResult.numbers.partial;
-      this.addResults(this.searchResult.keywords.partial);
-      this.addResults(this.searchResult.titles.partial);
-      this.addResults(this.searchResult.lyrics.partial);
-    }
   }
 
   getValue(event: Event) {
@@ -72,24 +55,12 @@ export class SearchComponent {
       clearTimeout(t);
     }
     this.timeouts.splice(0);
+    this.search_results = [];
+    this.results = [];
     if (text === "") {
-      this.results = [];
       return;
     }
-
     this.start = Date.now();
-    this.searchResult = new SongSearch();
-    this.searchResult.numbers = this.songs!.searchNumbers(text);
-    this.updateResults();
-
-    this.timeouts.push(setTimeout(() => {
-      this.searchResult.keywords = this.songs!.searchKeywords(text);
-      this.updateResults();
-      this.timeouts.push(setTimeout(() => {
-        this.searchResult.titles = this.songs!.searchTitles(text);
-        this.updateResults();
-        this.getLyrics(text, 0);
-      }, this.timeoutWait));
-    }, this.timeoutWait));
+    this.getLyrics(text, 0);
   }
 }
