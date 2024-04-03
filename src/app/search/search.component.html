@@ -3,14 +3,12 @@
 <div style="width: 80%;">
   <div class="input-group">
     <input class="form-control" #search placeholder="Chercher dans le numéro, nom, texte, ou mots clés" type="text"
-      (input)="getValue($event)">
+      (input)="getValue()" [(ngModel)]="value">
     <span class="input-group-btn">
-      <a class="btn" style="color: rgb(204, 204, 204); text-decoration: none; " href="#clear">
+      <a class="btn" style="color: rgb(204, 204, 204); text-decoration: none; " href="javascript:void(0);"
+        (click)="clear()">
         <i class="glyphicon glyphicon-remove"></i>
       </a>
-      <button type="submit" class="btn btn-default">
-        <i class="glyphicon glyphicon-search"></i>
-      </button>
     </span>
   </div>
 </div>

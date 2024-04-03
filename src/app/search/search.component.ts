@@ -4,16 +4,17 @@ import { ListSongs, SearchResult, Song } from "../../lib/song";
 import { ListBooks } from '../../lib/init';
 import { CommonModule } from '@angular/common';
 import { SongListComponent } from '../song-list/song-list.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, SongListComponent],
+  imports: [CommonModule, SongListComponent, FormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
 export class SearchComponent {
-  @ViewChild('search') searchElement?: ElementRef;
+  @ViewChild('search') searchElement!: ElementRef<HTMLInputElement>;
   songs?: ListSongs;
   books?: ListBooks;
   search_results: SearchResult[] = [];
@@ -22,6 +23,7 @@ export class SearchComponent {
   lyricsSize = 100;
   timeoutWait = 1;
   start: number = 0;
+  value = "";
 
   constructor(private dataService: DataService) { }
 
@@ -30,11 +32,10 @@ export class SearchComponent {
     this.songs = await this.dataService.list_songs();
     this.books = await this.dataService.list_books();
 
-    setTimeout(() => {
-      if (this.searchElement !== undefined) {
-        this.searchElement.nativeElement.focus();
-      }
-    });
+  }
+
+  ngAfterViewInit() {
+    this.searchElement.nativeElement.focus();
   }
 
   getLyrics(text: string, start: number) {
@@ -49,18 +50,23 @@ export class SearchComponent {
     }, this.timeoutWait));
   }
 
-  getValue(event: Event) {
-    const text = (event.target as HTMLInputElement).value;
+  getValue() {
     for (const t of this.timeouts) {
       clearTimeout(t);
     }
     this.timeouts.splice(0);
     this.search_results = [];
     this.results = [];
-    if (text === "") {
+    if (this.value === "") {
       return;
     }
     this.start = Date.now();
-    this.getLyrics(text, 0);
+    this.getLyrics(this.value, 0);
+  }
+
+  clear() {
+    this.value = "";
+    this.searchElement.nativeElement.focus();
+    this.getValue();
   }
 }

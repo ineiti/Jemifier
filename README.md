@@ -52,6 +52,7 @@ faire du développement.
 # CHANGELOG
 
 2024-04-03:
+- bug: si on clique sur le "x" de la recherche, la page se recharge
 - améliorer les résultats des recherches
   - recherche: faire des morceaux plus petits pour être plus rapide
   - en cherchant plusieurs mots séparés par des espaces en AND
