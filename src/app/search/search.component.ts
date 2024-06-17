@@ -41,7 +41,6 @@ export class SearchComponent {
   getLyrics(text: string, start: number) {
     this.timeouts.push(setTimeout(() => {
       if (start > this.songs!.songs.length) {
-        console.log(this.search_results.map((res) => [res.song.number, res.score]));
         return;
       }
       const results = this.songs!.search_matches(text, start, start + this.lyricsSize);
