@@ -32,7 +32,7 @@ export class DataService {
   async list_songs(): Promise<ListSongs> {
     if (this._list_songs === undefined) {
       const songs_file = await fetch("./assets/songs.json");
-      this._list_songs = new ListSongs(await songs_file.text(), await this.list_books());
+      this._list_songs = new ListSongs(await songs_file.text());
 
       const keywords_file = await fetch("./assets/keywords.json");
       this._list_songs!.add_keywords(await this.keywords());

@@ -38,6 +38,7 @@ faire du développement.
 
 # TODO
 
+- ajouter une page pour le compositeur, comme pour les dates et les mots clés
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
 - faire des listes de chants et les exporter
@@ -45,11 +46,15 @@ faire du développement.
 - réflechir comment bien faire pour intégrer les résultats partiels même s'il y a des résultats exacts
 - bien traduire tout l'interface
 - éditer les paroles des chants
-- faire un composant pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
+- faire une composante pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
 - ajouter une vue pour un seul culte avec les chansons de cette date
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-06-17:
+- chercher: faire que plusieurs mots justes sont montrés d'abord
+- ajouter le compositeur
 
 2024-04-03:
 - bug: si on clique sur le "x" de la recherche, la page se recharge

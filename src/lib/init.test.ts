@@ -1,8 +1,6 @@
-import { parse } from "papaparse";
 import { ListBooks, ListServices } from "./init";
 import { ListSongs } from "./song";
 import { Song } from "./song";
-import { Book } from "./book";
 
 const booksTest =
     `[{"abbreviation":"JEM","full_name":"J'aime l'Éternel"},
@@ -16,12 +14,12 @@ const songsTest =
     {"book_id":1,"number":196,"title":"Y'en a qui…","lyrics":"Y'en a qui sont petits"},
     {"book_id":1,"number":201,"title":"Mon auto","lyrics":"Mon auto, Jésus la guide, sûrement"}]`;
 const songsTestClass = [
-    new Song({ book_id: 0, number: 1, title: "J'aime l'Eternel", lyrics: "J'aime l'Éternel car Il entend ma voix" }),
-    new Song({ book_id: 0, number: 2, title: "Quand je vois le ciel", lyrics: "Quand je vois le ciel, œuvre de tes doigts" }),
-    new Song({ book_id: 0, number: 4, title: "Éternel! Fais-moi connaître tes voies", lyrics: "Éternel !  Fais-moi connaître tes voies" }),
-    new Song({ book_id: 1, number: 195, title: "Voyez de quel amour", lyrics: "Voyez de quel amour Le Père nous a tous aimés !" }),
-    new Song({ book_id: 1, number: 196, title: "Y'en a qui…", lyrics: "Y'en a qui sont petits" }),
-    new Song({ book_id: 1, number: 201, title: "Mon auto", lyrics: "Mon auto, Jésus la guide, sûrement" })
+    new Song(0, { book_id: 0, number: 1, author: "something", title: "J'aime l'Eternel", lyrics: "J'aime l'Éternel car Il entend ma voix" }),
+    new Song(1, { book_id: 0, number: 2, author: "something", title: "Quand je vois le ciel", lyrics: "Quand je vois le ciel, œuvre de tes doigts" }),
+    new Song(2, { book_id: 0, number: 4, author: "something", title: "Éternel! Fais-moi connaître tes voies", lyrics: "Éternel !  Fais-moi connaître tes voies" }),
+    new Song(3, { book_id: 1, number: 195, author: "something", title: "Voyez de quel amour", lyrics: "Voyez de quel amour Le Père nous a tous aimés !" }),
+    new Song(4, { book_id: 1, number: 196, author: "something", title: "Y'en a qui…", lyrics: "Y'en a qui sont petits" }),
+    new Song(5, { book_id: 1, number: 201, author: "something", title: "Mon auto", lyrics: "Mon auto, Jésus la guide, sûrement" })
 ]
 
 const servicesTest =
@@ -39,7 +37,7 @@ describe("List* initialization happy paths", () => {
 
     it("should build ListSongs", () => {
         const lb = new ListBooks(booksTest);
-        const sb = new ListSongs(songsTest, lb);
+        const sb = new ListSongs(songsTest);
         expect(sb.songs).toEqual(songsTestClass);
         // expect(sb.songs.length).toBe(songsTestClass.length);
         // for (let i = 0; i < sb.songs.length; i++) {
@@ -49,7 +47,7 @@ describe("List* initialization happy paths", () => {
 
     it("should build ListServices", () => {
         const lb = new ListBooks(booksTest);
-        const sb = new ListSongs(songsTest, lb);
+        const sb = new ListSongs(songsTest);
         const eb = new ListServices(servicesTest);
         expect(eb.services.length).toBe(2);
         expect(eb.services[0].date).toBe("20190602");

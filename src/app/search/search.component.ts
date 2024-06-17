@@ -41,9 +41,11 @@ export class SearchComponent {
   getLyrics(text: string, start: number) {
     this.timeouts.push(setTimeout(() => {
       if (start > this.songs!.songs.length) {
+        console.log(this.search_results.map((res) => [res.song.number, res.score]));
         return;
       }
-      this.search_results = this.search_results.concat(this.songs!.search_matches(text, start, start + this.lyricsSize));
+      const results = this.songs!.search_matches(text, start, start + this.lyricsSize);
+      this.search_results = this.search_results.concat(results);
       this.search_results.sort((a, b) => b.score - a.score);
       this.results = this.search_results.map((sr) => sr.song);
       this.getLyrics(text, start + this.lyricsSize);

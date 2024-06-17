@@ -2,7 +2,8 @@ import { ListBooks } from "./init";
 import { Keywords } from "./keywords";
 
 export enum FOUND {
-    NUMBER = 4,
+    NUMBER = 5,
+    AUTHOR = 4,
     TITLE = 3,
     KEYWORDS = 2,
     LYRICS = 1,
@@ -11,6 +12,8 @@ export enum FOUND {
 export class Song {
     book_id: number;
     number: number;
+    author: string;
+    author_search: SearchString;
     title: string;
     title_search: SearchString;
     lyrics: string;
@@ -21,6 +24,8 @@ export class Song {
     constructor(public song_id: number, line: any) {
         this.book_id = line.book_id;
         this.number = line.number;
+        this.author = line.author;
+        this.author_search = new SearchString(this.author);
         this.title = line.title;
         this.title_search = new SearchString(this.title);
         this.lyrics = line.lyrics.trim();
@@ -33,24 +38,25 @@ export class Song {
     }
 
     search_score(search: string): number {
+        let result = 0;
         const nbr = parseInt(search);
         if (!Number.isNaN(nbr)) {
             if (this.number === nbr) {
-                return FOUND.NUMBER;
+                result += FOUND.NUMBER;
             }
         }
-        const title = this.title_search.search(search, FOUND.TITLE);
-        if (title > 0) {
-            return title;
-        }
         const keywords = this.keywords_search
-            .map((kw, i) => kw.search(search, FOUND.KEYWORDS + (4-i) * 0.2))
+            .map((kw, i) => kw.search(search, FOUND.KEYWORDS + (4 - i) * 0.2))
             .filter((res) => res > 0);
         if (keywords.length > 0) {
             keywords.sort();
-            return keywords.pop()!;
+            result += keywords.pop()!;
         }
-        return this.lyrics_search.search(search, FOUND.LYRICS);
+        const title = this.title_search.search(search, FOUND.TITLE);
+        const lyrics = this.lyrics_search.search(search, FOUND.LYRICS);
+        result += Math.max(title, lyrics);
+        result += this.author_search.search(search, FOUND.AUTHOR);
+        return result;
     }
 
     get_book_number(books: ListBooks, separator = " "): string {
@@ -76,7 +82,7 @@ class SearchString {
             return weight;
         }
         if (this.parts.some((s) => s.startsWith(search))) {
-            return weight - 0.5;
+            return weight / 2;
         }
         return 0;
     }
@@ -85,8 +91,7 @@ class SearchString {
 export class ListSongs {
     songs: Song[] = [];
 
-    // CLEANUP: remove books
-    constructor(songs_file: string, books: ListBooks) {
+    constructor(songs_file: string) {
         this.songs = JSON.parse(songs_file).map((line: any, i: number) => new Song(i, line));
     }
 
@@ -109,17 +114,17 @@ export class ListSongs {
         return id;
     }
 
-    search_matches(search: string, start: number, end: number): SearchResult[] {
-        if (start > this.songs.length) {
+    search_matches(search: string, start: number, end = -1): SearchResult[] {
+        if (start > this.songs.length || start < 0) {
             return [];
         }
-        if (end > this.songs.length) {
+        if (end > this.songs.length || end < start) {
             end = this.songs.length;
         }
         const search_str = new SearchString(search);
         let results: SearchResult[] = [];
         for (const s_str of search_str.parts) {
-            results = results.concat(results, this.songs
+            results = results.concat(this.songs
                 .slice(start, end)
                 .map((song) => new SearchResult(song, song.search_score(s_str)))
                 .filter((sr) => sr.score > 0));
@@ -128,12 +133,15 @@ export class ListSongs {
             const result: SearchResult[] = [];
             results
                 .sort((a, b) => a.song.song_id - b.song.song_id)
-                .reduce((prev, curr) => {
+                .reduce((prev, curr, i) => {
                     if (prev.song.song_id !== curr.song.song_id) {
                         result.push(prev);
-                        return curr;
+                    } else {
+                        curr.score += prev.score;
                     }
-                    curr.score += prev.score;
+                    if (i === results.length - 1) {
+                        result.push(curr);
+                    }
                     return curr;
                 });
             return result;

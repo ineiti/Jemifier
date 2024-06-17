@@ -32,7 +32,7 @@ async function request_keywords(start: number, end: number) {
     }
 
     const listBooks = new ListBooks(fs.readFileSync(books_name, "utf-8"));
-    const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"), listBooks);
+    const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"));
     const listKeywords = new Keywords('{ "list": [], "keywords": []}');
     listKeywords.list = keywords;
     listKeywords.list.sort();

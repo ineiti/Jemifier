@@ -38,7 +38,7 @@ async function createServices(configFile: string) {
     }
 
     const listBooks = new ListBooks(fs.readFileSync(books_name, "utf-8"));
-    const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"), listBooks);
+    const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"));
 
     const services = await readServices(listBooks.books, listSongs.songs, config.sets);
     fs.writeFileSync("../src/assets/services.json", JSON.stringify(services));
