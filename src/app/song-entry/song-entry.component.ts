@@ -31,4 +31,8 @@ export class SongEntryComponent {
       .map((service) => service.date);
   }
 
+  encode(s: string): string {
+    return s;
+    // return encodeURIComponent(s);
+  }
 }

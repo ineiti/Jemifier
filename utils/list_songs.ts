@@ -26,7 +26,8 @@ async function convertSong() {
 
     const listBooks = new ListBooks(fs.readFileSync(books_name, "utf-8"));
     const listSongs = new ListSongs(fs.readFileSync(songs_name, "utf-8"));
-    for (const song of listSongs.songs){
-        console.log(`${song.get_book_number_title(listBooks)}`);
-    }
+    console.log([...new Set(listSongs.songs.flatMap((s) => s.authors_encoded()))].sort());
+    // for (const song of listSongs.songs){
+    //     console.log(`${song.get_book_number_title(listBooks)}`);
+    // }
 }

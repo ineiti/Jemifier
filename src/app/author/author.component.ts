@@ -17,7 +17,7 @@ export class AuthorComponent {
   authors: string[] = [];
   songs: Song[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private dataComponent: DataService) { }
+  constructor(private dataComponent: DataService) { }
 
   async ngOnChanges() {
     document.title = "Jemifier - auteurs";
@@ -28,9 +28,5 @@ export class AuthorComponent {
       this.songs = listSongs.songs
         .filter((s, i) => s.author.includes(this.author!));
     }
-  }
-
-  encode(s: string): string{
-    return encodeURIComponent(s);
   }
 }

@@ -68,7 +68,11 @@ export class Song {
     }
 
     authors(): string[] {
-        return this.author.split(/([;,-]| et | \/ )/).map((a) => a.trim()).filter((a) => !a.match(/[0-9,;\(\/-]/) && a.length > 0);
+        return this.author.split(/(?:[;,-]| et | \/ )/).map((a) => a.trim()).filter((a) => !a.match(/[0-9\(]/) && a.length > 0);
+    }
+
+    authors_encoded(): string[] {
+        return this.authors().map((a) => encodeURIComponent(a));
     }
 }
 

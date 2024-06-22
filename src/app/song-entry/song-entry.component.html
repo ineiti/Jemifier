@@ -11,7 +11,9 @@
     </span>
     <ng-template #none>jamais</ng-template>
     <br>
-    {{ song.author }}:
+    <span *ngFor="let author of song!.authors()">
+        <a class="author" routerLink="/author/{{encode(author)}}">{{ author }}</a>
+    </span>
     <span *ngFor="let keyword of song!.keywords">
         <a class="keyword" routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
         &nbsp;
