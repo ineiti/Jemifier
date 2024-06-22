@@ -30,9 +30,4 @@ export class SongEntryComponent {
       .filter((service) => service.songs.includes(this.song!.song_id))
       .map((service) => service.date);
   }
-
-  encode(s: string): string {
-    return s;
-    // return encodeURIComponent(s);
-  }
 }
