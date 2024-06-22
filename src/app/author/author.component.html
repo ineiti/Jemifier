@@ -1,0 +1,13 @@
+<div *ngIf="author === undefined; else has_author">
+    <h1>Auteurs</h1>
+    <div style="line-height: 2em;">
+        <span *ngFor="let author of authors">
+            <a class="author" routerLink="/author/{{encode(author)}}" [innerHTML]="author"></a>
+            &nbsp; 
+        </span>
+    </div>
+</div>
+<ng-template #has_author>
+    <h1>{{ author }}</h1>
+    <app-song-list [songs]="songs"></app-song-list>
+</ng-template>

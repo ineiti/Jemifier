@@ -40,6 +40,7 @@ faire du développement.
 
 - ajouter une page pour le compositeur, comme pour les dates et les mots clés
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
+- quelques chants n'ont pas de mots clés, p.e. 338, 339
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
 - faire des listes de chants et les exporter
 - ajouter des liens sur jemaf.fr et/ou youtube

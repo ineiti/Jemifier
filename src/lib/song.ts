@@ -37,7 +37,7 @@ export class Song {
         this.keywords_search = kws.map((kw) => new SearchString(kw));
     }
 
-    search_score(search: string): number {
+    search_result(search: string): SearchResult {
         let result = 0;
         const nbr = parseInt(search);
         if (!Number.isNaN(nbr)) {
@@ -56,7 +56,7 @@ export class Song {
         const lyrics = this.lyrics_search.search(search, FOUND.LYRICS);
         result += Math.max(title, lyrics);
         result += this.author_search.search(search, FOUND.AUTHOR);
-        return result;
+        return new SearchResult(this, result);
     }
 
     get_book_number(books: ListBooks, separator = " "): string {
@@ -65,6 +65,10 @@ export class Song {
 
     get_book_number_title(books: ListBooks): string {
         return `${this.get_book_number(books)} - ${this.title}`;
+    }
+
+    authors(): string[] {
+        return this.author.split(/([;,-]| et | \/ )/).map((a) => a.trim()).filter((a) => !a.match(/[0-9,;\(\/-]/) && a.length > 0);
     }
 }
 
@@ -126,7 +130,7 @@ export class ListSongs {
         for (const s_str of search_str.parts) {
             results = results.concat(this.songs
                 .slice(start, end)
-                .map((song) => new SearchResult(song, song.search_score(s_str)))
+                .map((song) => song.search_result(s_str))
                 .filter((sr) => sr.score > 0));
         }
         if (results.length > 1) {
