@@ -38,7 +38,6 @@ faire du développement.
 
 # TODO
 
-- ajouter une page pour le compositeur, comme pour les dates et les mots clés
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - quelques chants n'ont pas de mots clés, p.e. 338, 339
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
@@ -52,6 +51,9 @@ faire du développement.
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-06-22:
+- ajouter une page pour le compositeur, comme pour les dates et les mots clés
 
 2024-06-17:
 - chercher: faire que plusieurs mots justes sont montrés d'abord

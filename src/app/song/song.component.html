@@ -28,6 +28,8 @@
         <h2>Song lyrics</h2>
         <pre>{{ song!.lyrics }}</pre>
         <h2>Author</h2>
-        <p>{{ song.author }}</p>
+        <span *ngFor="let author of song!.authors()">
+            <a class="author" routerLink="/author/{{author}}">{{ author }}</a>
+        </span>
     </div>
 </ng-template>
