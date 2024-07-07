@@ -20,10 +20,10 @@ export class KeywordComponent {
 
   constructor(private data_component: DataService) { }
 
-  async ngOnChanges() {
+  ngOnChanges() {
     document.title = "Jemifier - mots clés";
-    const listSongs = await this.data_component.list_songs();
-    this.keywords = (await this.data_component.keywords()).list.map((k) => k.replace('-', '&#8209;'));
+    const listSongs = this.data_component.list_songs;
+    this.keywords = this.data_component.keywords.list.map((k) => k.replace('-', '&#8209;'));
     this.keywords.sort((a, b) => a.localeCompare(b));
     if (this.keyword !== undefined) {
       this.songs = listSongs.songs

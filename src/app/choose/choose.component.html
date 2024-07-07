@@ -1,0 +1,11 @@
+<div *ngIf="list.length === 0">
+    <h1>Commencer une liste</h1>
+    <p>Pour commencer une nouvelle liste, cherchez un chant, puis cliquez sur le
+        &#9989;
+    </p>
+</div>
+<div *ngIf="list.length > 0">
+    <h1>Votre Liste</h1>
+    <button mat-flat-button>Effacer</button>
+    <app-song-list [songs]="list" [hideCheck]="true" [hideKnownCheckbox]="true"></app-song-list>
+</div>

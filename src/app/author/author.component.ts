@@ -19,9 +19,9 @@ export class AuthorComponent {
 
   constructor(private dataComponent: DataService) { }
 
-  async ngOnChanges() {
+  ngOnChanges() {
     document.title = "Jemifier - auteurs";
-    const listSongs = await this.dataComponent.list_songs();
+    const listSongs = this.dataComponent.list_songs;
     this.authors = [...new Set(listSongs.songs.flatMap((s) => s.authors()))];
     this.authors.sort((a, b) => a.localeCompare(b));
     if (this.author !== undefined) {

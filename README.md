@@ -38,15 +38,13 @@ faire du développement.
 
 # TODO
 
+- faire des listes de chants et les exporter
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - quelques chants n'ont pas de mots clés, p.e. 338, 339
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
-- faire des listes de chants et les exporter
 - ajouter des liens sur jemaf.fr et/ou youtube
-- réflechir comment bien faire pour intégrer les résultats partiels même s'il y a des résultats exacts
 - bien traduire tout l'interface
 - éditer les paroles des chants
-- faire une composante pour afficher un choix de chants - à utiliser dans les différentes parties de l'application
 - ajouter une vue pour un seul culte avec les chansons de cette date
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 

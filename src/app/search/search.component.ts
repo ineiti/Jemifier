@@ -27,10 +27,10 @@ export class SearchComponent {
 
   constructor(private dataService: DataService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     document.title = "Jemifier - recherche"
-    this.songs = await this.dataService.list_songs();
-    this.books = await this.dataService.list_books();
+    this.songs = this.dataService.list_songs;
+    this.books = this.dataService.list_books;
 
   }
 

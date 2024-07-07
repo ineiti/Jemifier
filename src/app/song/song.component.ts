@@ -21,24 +21,20 @@ export class SongComponent {
 
   constructor(private data_component: DataService) { }
 
-  async ngOnChanges() {
+  ngOnChanges() {
     const [bookId, songNbr] = this.songId.split("-");
     if (bookId === undefined || songNbr === undefined) {
       return;
     }
 
     try {
-      const list_books = await this.data_component.list_books();
+      const list_books = this.data_component.list_books;
       const book = list_books.find_book(bookId);
-      const list_songs = await this.data_component.list_songs();
+      const list_songs = this.data_component.list_songs;
       this.song = list_songs.songs[list_songs.find_by_number(book, parseInt(songNbr))];
       console.dir(this.song);
       this.book = list_books.books[this.song!.book_id].abbreviation;
-      this.services = (await this.data_component.list_services()).services
-        .filter((service) => {
-          return service.songs.includes(this.song?.song_id ?? -1);
-        })
-        .map((service) => { return service.date });
+      this.services = this.data_component.list_services.get_dates(this.song!);
       this.unknown_id = false;
     } catch {
       return;

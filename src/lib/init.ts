@@ -1,5 +1,6 @@
 import { Book } from "./book";
 import { Service } from "./service";
+import { Song } from "./song";
 
 export class ListBooks {
     books: Book[] = [];
@@ -36,6 +37,12 @@ export class ListServices {
 
     constructor(services_file: string) {
         this.services = JSON.parse(services_file).map((s: any) => new Service(s.date, s.songs));
+    }
+
+    get_dates(song: Song): string[] {
+        return this.services
+            .filter((service) => service.songs.includes(song!.song_id))
+            .map((service) => service.date);
     }
 }
 

@@ -20,10 +20,10 @@ export class PreferredComponent {
 
   constructor(private dataService: DataService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     document.title = "Jemifier - préférées"
-    this.preferred = await this.dataService.list_preferred();
-    this.songs = await this.dataService.list_songs();
-    this.books = await this.dataService.list_books();
+    this.preferred = this.dataService.preferred_songs;
+    this.songs = this.dataService.list_songs;
+    this.books = this.dataService.list_books;
   }
 }

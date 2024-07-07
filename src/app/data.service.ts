@@ -7,59 +7,59 @@ import { Keywords } from '../lib/keywords';
   providedIn: 'root'
 })
 export class DataService {
-  private _list_books?: ListBooks;
-  private _list_songs?: ListSongs;
-  private _list_services?: ListServices;
-  private _preferred_songs?: ListPreferred;
-  private _keywords?: Keywords;
+  list_books!: ListBooks;
+  list_songs!: ListSongs;
+  list_services!: ListServices;
+  preferred_songs!: ListPreferred;
+  keywords!: Keywords;
 
   async load_all(){
-    await this.list_books();
-    await this.list_songs();
-    await this.list_services();
-    await this.list_preferred();
-    await this.keywords();
+    await this.get_list_books();
+    await this.get_list_songs();
+    await this.get_list_services();
+    await this.get_preferred_songs();
+    await this.get_keywords();
   }
 
-  async list_books(): Promise<ListBooks> {
-    if (this._list_books === undefined) {
+  async get_list_books(): Promise<ListBooks> {
+    if (this.list_books === undefined) {
       const books_file = await fetch("./assets/books.json");
-      this._list_books = new ListBooks(await books_file.text());
+      this.list_books = new ListBooks(await books_file.text());
     }
-    return this._list_books;
+    return this.list_books;
   }
 
-  async list_songs(): Promise<ListSongs> {
-    if (this._list_songs === undefined) {
+  async get_list_songs(): Promise<ListSongs> {
+    if (this.list_songs === undefined) {
       const songs_file = await fetch("./assets/songs.json");
-      this._list_songs = new ListSongs(await songs_file.text());
+      this.list_songs = new ListSongs(await songs_file.text());
 
       const keywords_file = await fetch("./assets/keywords.json");
-      this._list_songs!.add_keywords(await this.keywords());
+      this.list_songs!.add_keywords(await this.get_keywords());
     }
-    return this._list_songs;
+    return this.list_songs;
   }
 
-  async list_services(): Promise<ListServices> {
-    if (this._list_services === undefined) {
+  async get_list_services(): Promise<ListServices> {
+    if (this.list_services === undefined) {
       const services_file = await fetch("./assets/services.json");
-      this._list_services = new ListServices(await services_file.text());
+      this.list_services = new ListServices(await services_file.text());
     }
-    return this._list_services;
+    return this.list_services;
   }
 
-  async list_preferred(): Promise<ListPreferred> {
-    if (this._preferred_songs === undefined) {
-      this._preferred_songs = new ListPreferred(await this.list_services());
+  async get_preferred_songs(): Promise<ListPreferred> {
+    if (this.preferred_songs === undefined) {
+      this.preferred_songs = new ListPreferred(await this.get_list_services());
     }
-    return this._preferred_songs;
+    return this.preferred_songs;
   }
 
-  async keywords(): Promise<Keywords> {
-    if (this._keywords === undefined) {
+  async get_keywords(): Promise<Keywords> {
+    if (this.keywords === undefined) {
       const keywords_file = await fetch("./assets/keywords.json");
-      this._keywords = new Keywords(await keywords_file.text());
+      this.keywords = new Keywords(await keywords_file.text());
     }
-    return this._keywords!;
+    return this.keywords!;
   }
 }

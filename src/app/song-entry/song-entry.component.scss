@@ -1,4 +1,4 @@
-@import "../styles.scss";
+@import "../common.scss";
 
 .songs {
     display: block;
@@ -26,4 +26,13 @@ span.date a:hover {
 span.date a {
     background-color: #ffffee;
     border: 0px;
+}
+
+a.take {
+    background-color: #ffffee;
+    border: 1px solid #ffffee;
+}
+a.take:hover {
+    background-color: #ee8;
+    border: 1px solid #000;
 }

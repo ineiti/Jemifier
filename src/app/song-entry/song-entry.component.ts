@@ -15,19 +15,17 @@ import { Service } from '../../lib/service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SongEntryComponent {
+  @Input() song!: Song;
+  @Input() hideCheck = false;
   listBooks!: ListBooks;
   listServices!: ListServices;
-  @Input() song!: Song;
-  services?: string[];
+  service_dates?: string[];
 
   constructor(private data_component: DataService) { }
 
-  async ngOnInit() {
-    this.listBooks = await this.data_component.list_books();
-    this.listServices = await this.data_component.list_services();
-    this.services = this.listServices
-      .services
-      .filter((service) => service.songs.includes(this.song!.song_id))
-      .map((service) => service.date);
+  ngOnInit() {
+    this.listBooks = this.data_component.list_books;
+    this.listServices = this.data_component.list_services;
+    this.service_dates = this.listServices.get_dates(this.song);
   }
 }

@@ -22,15 +22,15 @@ export class DatesComponent {
   progress = "";
   constructor(private data_component: DataService, private router: Router) { }
 
-  ngOnInit(){
+  ngOnInit() {
     console.log("init");
   }
 
-  async ngOnChanges() {
+  ngOnChanges() {
     document.title = "Jemifier - dates";
     if (this.list_songs === undefined || this.services === undefined) {
-      this.list_songs = await this.data_component.list_songs();
-      this.services = (await this.data_component.list_services()).services.slice().reverse().slice(0);
+      this.list_songs = this.data_component.list_songs;
+      this.services = this.data_component.list_services.services.slice().reverse().slice(0);
     }
 
     this.addServices();
@@ -39,7 +39,7 @@ export class DatesComponent {
   addServices() {
     this.servicesToShow = this.servicesToShow.concat(this.services!.splice(0, 10));
     this.progress += ".";
-    if (this.services!.length > 0){
+    if (this.services!.length > 0) {
       setTimeout(() => this.addServices(), 10);
     } else {
       if (this.date !== undefined) {
@@ -50,7 +50,7 @@ export class DatesComponent {
             targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
-      }  
+      }
     }
   }
 
