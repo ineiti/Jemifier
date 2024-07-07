@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import { DataService } from '../data.service';
 import { ListBooks, ListServices } from '../../lib/init';
 import { Song } from '../../lib/song';
-import { Service } from '../../lib/service';
 
 @Component({
   selector: 'app-song-entry',

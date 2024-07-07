@@ -1,11 +1,20 @@
-<div *ngIf="list.length === 0">
+<div *ngIf="chosen.list.length === 0">
     <h1>Commencer une liste</h1>
     <p>Pour commencer une nouvelle liste, cherchez un chant, puis cliquez sur le
         &#9989;
     </p>
 </div>
-<div *ngIf="list.length > 0">
+<div *ngIf="chosen.list.length > 0">
     <h1>Votre Liste</h1>
-    <button mat-flat-button>Effacer</button>
-    <app-song-list [songs]="list" [hideCheck]="true" [hideKnownCheckbox]="true"></app-song-list>
+    <button mat-button (click)="clear()">Effacer</button>
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+        @for (song of chosen.list; track song) {
+        <span cdkDrag class="drag-box">
+            <span (click)="delete(song.song_id)" style="padding-right: 1em;">&#10060;</span>
+            <app-song-entry [song]="song" [hideCheck]="true"></app-song-entry>
+        </span>
+        }
+    </div>
+    <h2>Propositions de chants</h2>
+    <app-song-list [songs]="propositions"></app-song-list>
 </div>

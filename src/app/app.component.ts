@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DataService } from './data.service';
+import { ChosenService } from './chosen.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  providers: [DataService],
+  providers: [DataService, ChosenService],
   imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
