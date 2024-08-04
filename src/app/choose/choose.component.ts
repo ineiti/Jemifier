@@ -18,34 +18,40 @@ import { ChosenService } from '../chosen.service';
 export class ChooseComponent {
   @Input() songId?: string;
   propositions: Song[] = [];
+  insertPos = 0;
 
   constructor(private data: DataService, public chosen: ChosenService) {
+    this.insertPos = chosen.currentList.songs.length - 1;
   }
 
   ngOnChanges() {
     if (this.songId !== undefined) {
-      this.chosen.add_song(parseInt(this.songId));
+      this.chosen.addSong(parseInt(this.songId), this.insertPos);
+      this.insertPos++;
+      if (this.insertPos >= this.chosen.currentList.songs.length){
+        this.insertPos = this.chosen.currentList.songs.length - 1;
+      }
     }
     this.update_propositions();
   }
 
   clear() {
-    this.chosen.list.splice(0);
+    this.chosen.currentList.songs.splice(0);
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.chosen.list, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.chosen.currentList.songs, event.previousIndex, event.currentIndex);
     this.update_propositions();
   }
 
   update_propositions() {
-    if (this.chosen.list.length === 0) {
+    if (this.chosen.currentList.songs.length === 0) {
       return;
     }
-    const last = this.chosen.list.slice(-1)[0];
+    const last = this.chosen.currentList.songs.slice(this.insertPos ?? -1)[0];
     this.propositions = this.data.list_songs.songs
       .filter((s) => last.keywords.length === 0 || s.keywords.includes(last.keywords[0]))
-      .filter((s) => !this.chosen.list.some((l) => l.song_id === s.song_id))
+      .filter((s) => !this.chosen.currentList.songs.some((l) => l.song_id === s.song_id))
       .sort((a, b) => a.keywords.findIndex((k) => k === last.keywords[0]) -
         b.keywords.findIndex((k) => k === last.keywords[0]));
     const twoFilter = this.propositions.filter((s) => last.keywords.length <= 1 || s.keywords.includes(last.keywords[1]));
@@ -54,7 +60,12 @@ export class ChooseComponent {
     }
   }
 
-  delete(id: number) {
-    this.chosen.rm_song(id);
+  delete(pos: number) {
+    this.chosen.rmSong(pos);
+  }
+
+  insert(pos: number) {
+    this.insertPos = pos;
+    this.update_propositions();
   }
 }

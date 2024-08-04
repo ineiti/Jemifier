@@ -9,7 +9,9 @@
     "hexdump@latest",
     "curl@latest",
     "jq@latest",
-    "screen@latest"
+    "screen@latest",
+    "which@latest",
+    "rename@latest"
   ],
   "shell": {
     "init_hook": [
@@ -37,7 +39,7 @@
   },
   "env": {
     "BUN_INSTALL": "$PWD/.bun",
-    "LS_COLORS": "di=33",
-    "PATH": "$PATH:$PWD/.bun/bin"
+    "LS_COLORS":   "di=33",
+    "PATH":        "$PATH:$PWD/.bun/bin"
   }
 }

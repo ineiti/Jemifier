@@ -16,10 +16,12 @@ export class AppComponent {
   title = 'Jemifier';
   loaded = false;
 
-  constructor(private router: Router, private data_component: DataService) { }
+  constructor(private router: Router, private data_component: DataService,
+    private chosen: ChosenService) { }
 
   async ngOnInit() {
     await this.data_component.load_all();
+    await this.chosen.initLists();
     this.loaded = true;
     // const currentRoute = this.route.snapshot.active;
     this.router.events.subscribe((url) => {

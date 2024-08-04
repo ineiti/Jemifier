@@ -5,14 +5,17 @@
     </p>
 </div>
 <div *ngIf="chosen.list.length > 0">
-    <h1>Votre Liste</h1>
-    <button mat-button (click)="clear()">Effacer</button>
+    <h1>Votre Liste {{ chosen.currentList.name }}</h1>
+    <button mat-stroked-button (click)="clear()">Effacer</button>
     <div cdkDropList (cdkDropListDropped)="drop($event)">
-        @for (song of chosen.list; track song) {
-        <span cdkDrag class="drag-box">
-            <span (click)="delete(song.song_id)" style="padding-right: 1em;">&#10060;</span>
-            <app-song-entry [song]="song" [hideCheck]="true"></app-song-entry>
-        </span>
+        @for (song of chosen.currentList.songs; track song) {
+        <div [class.chosen]="insertPos === $index">
+            <span cdkDrag class="drag-box">
+                <span (click)="delete($index)" class="action">&#10060;</span>
+                <span (click)="insert($index)" class="action">&#10068;</span>
+                <app-song-entry [song]="song" [hideCheck]="true"></app-song-entry>
+            </span>
+        </div>
         }
     </div>
     <h2>Propositions de chants</h2>

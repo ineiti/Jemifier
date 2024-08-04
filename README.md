@@ -38,17 +38,27 @@ faire du développement.
 
 # TODO
 
+- find why the text of the buttons and checkboxes are so small
 - faire des listes de chants et les exporter
+  - Also do a markov-chain on past services and let the user choose what they want to see
+- ajouter des liens sur jemaf.fr et/ou youtube
+  - add youtube search: https://www.youtube.com/results?search_query=Chef%20couvert%20de%20blessures.%20-%20Hans%20Leo%20Hassler%20-%20af%20100
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - quelques chants n'ont pas de mots clés, p.e. 338, 339
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
-- ajouter des liens sur jemaf.fr et/ou youtube
 - bien traduire tout l'interface
 - éditer les paroles des chants
-- ajouter une vue pour un seul culte avec les chansons de cette date
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-08-04:
+- faire des listes de chants et les exporter
+  - Store current list in localStorage
+  - fix UI bug when showing the songs (too squeezed vertically)
+
+2024-07-15:
+  - Song 1004 has no title
 
 2024-06-22:
 - ajouter une page pour le compositeur, comme pour les dates et les mots clés

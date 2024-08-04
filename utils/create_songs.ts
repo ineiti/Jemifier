@@ -26,14 +26,18 @@ async function createSongs(file: string) {
     const songs: Song[] = [];
     for (const [abb, desc] of Object.entries(data.books) as [string, any]) {
         books.push(new Book(abb, desc.name))
-        songs.push(...(await readSongs(books.length - 1, abb, desc.path)));
+        if (desc.path !== undefined) {
+            songs.push(...(await readOpenSongs(books.length - 1, abb, desc.path)));
+        } else if (desc.chord !== undefined) {
+            songs.push(...(await readChordSongs(books.length - 1, abb, desc.chord)));
+        }
     }
 
     fs.writeFileSync("../src/assets/books.json", JSON.stringify(books));
     fs.writeFileSync("../src/assets/songs.json", JSON.stringify(songs));
 }
 
-async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Promise<Song[]> {
+async function readOpenSongs(bookNbr: number, bookAbb: string, songPath: string): Promise<Song[]> {
     const songs: Song[] = [];
 
     if (!fs.existsSync(songPath)) {
@@ -72,4 +76,68 @@ async function readSongs(bookNbr: number, bookAbb: string, songPath: string): Pr
     }
 
     return songs;
+}
+
+async function readChordSongs(bookNbr: number, bookAbb: string, songPath: string): Promise<Song[]> {
+    const songs: Song[] = [];
+
+    if (!fs.existsSync(songPath)) {
+        throw new Error(`Didn't find song-path ${songPath}`);
+    }
+
+    const songFiles = fs.readdirSync(songPath);
+    songFiles.sort((a, b) => parseInt(a.match(/([0-9]+)/)![1]) - parseInt(b.match(/([0-9]+)/)![1]));
+    for (const songFile of songFiles) {
+        const songFilePath = path.join(songPath, songFile);
+        if (!fs.statSync(songFilePath).isFile()) {
+            console.error(`Found non-file ${songFile}`)
+            continue
+        }
+
+        const lines = fs.readFileSync(songFilePath).toString("utf-8").replaceAll("–", "-").split("\n");
+        try {
+            const song = parseChord(bookNbr, bookAbb, lines);
+            songs.push(song);
+            console.log(`Successfully parsed ${bookAbb}${song.number} - ${song.title}`);
+        } catch (e) {
+            console.log(`While parsing ${songFile}, got error ${e}`);
+            break;
+        }
+    }
+
+    return songs;
+}
+
+const songNbrRegexp = new RegExp(`.* - JEM[^0-9]?([0-9]*)`);
+const tagRegexp = new RegExp(`{(?:(.*?): )?(.*)}`);
+
+function parseChord(bookNbr: number, bookAbb: string, lines: string[]): Song {
+    const tags = new Map();
+    for (const line of lines) {
+        const match = line.match(tagRegexp);
+        if (match === null || match.length != 3) {
+            break;
+        }
+        tags.set(match[1], match[2]);
+    }
+    const [title, author, date, key] = [tags.get("t"), tags.get("st"), tags.get("c"), tags.get("key")];
+    const lyrics = [];
+    for (let i = 6; i < lines.length; i++) {
+        const line = lines[i];
+        if (line[0] == '{') {
+            const tag = line.match(tagRegexp);
+            switch (tag![0]) {
+                case "c":
+                    lyrics.push(`# ${tag![1]}`);
+                    break;
+                case "key":
+                    i += 2;
+                    continue;
+            }
+        } else {
+            lyrics.push(line.replaceAll(/\[.*?\]/g, ''));
+        }
+    }
+    const songNbr = parseInt(date.match(songNbrRegexp)![1]);
+    return new Song(-1, { book_id: bookNbr, number: songNbr, title: title, author: author.replace(/.* - /, ''), lyrics: lyrics.join("\n") });
 }

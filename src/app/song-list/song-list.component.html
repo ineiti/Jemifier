@@ -1,4 +1,4 @@
-<div style="line-height: 2em;">
+<div>
     <mat-checkbox *ngIf="!hideKnownCheckbox && some_unknown()" [(ngModel)]="knownOnly">Seulement chants connus</mat-checkbox>
     <ul>
         <span *ngFor="let song of songs">

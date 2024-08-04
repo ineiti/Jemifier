@@ -22,10 +22,6 @@ export class DatesComponent {
   progress = "";
   constructor(private data_component: DataService, private router: Router) { }
 
-  ngOnInit() {
-    console.log("init");
-  }
-
   ngOnChanges() {
     document.title = "Jemifier - dates";
     if (this.list_songs === undefined || this.services === undefined) {

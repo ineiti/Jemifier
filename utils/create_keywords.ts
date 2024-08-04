@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-// import { Axios, post } from 'axios';
 import Axios from 'axios';
 import { command, number, option, positional, run, string } from 'cmd-ts';
 import { ListBooks } from '../src/lib/init';

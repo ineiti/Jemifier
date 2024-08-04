@@ -84,7 +84,7 @@ class SearchString {
 
     constructor(orig: string) {
         this.lower_ascii = orig.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
-        this.parts = this.lower_ascii.split(/[,\.' -]/).filter((p) => p.length > 0);
+        this.parts = this.lower_ascii.split(/[,\.' \n-]/).filter((p) => p.length > 0);
     }
 
     search(search: string, weight: number): number {
@@ -111,7 +111,7 @@ export class ListSongs {
                 const index = this.find_by_number(entry.book_id, entry.number);
                 this.songs[index].set_keywords(entry.keywords);
             } catch (e) {
-                console.warn(`While reading keywords, couldn't find ${entry}`);
+                console.warn(`While reading keywords for ${entry.book_id}/${entry.number}, couldn't find ${entry}: ${e}`);
             }
         }
     }
