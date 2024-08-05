@@ -5,7 +5,8 @@
 </div>
 <ng-template #show_song>
     <div *ngIf="song !== undefined">
-        <h1>{{ book }} {{ song!.number }} - {{ song!.title }}</h1>
+        <h1> <a class="take" routerLink="/choose/{{song!.song_id}}">&#9989;</a> -
+            {{ book }} {{ song!.number }} - {{ song!.title }}</h1>
         <h2>Services</h2>
         <div style="line-height: 2em;">
             <span *ngFor="let service of services.slice().reverse(); last as isLast">
@@ -19,12 +20,13 @@
         This song has been chosen {{ services.length }} times.
         <h2>Keywords</h2>
         <div style="line-height: 2em;">
-        <span *ngFor="let keyword of song.keywords;">
-            <span class="date">
-                <a routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
-                &nbsp;
+            <span *ngFor="let keyword of song.keywords;">
+                <span class="date">
+                    <a routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
+                    &nbsp;
+                </span>
             </span>
-        </span></div>
+        </div>
         <h2>Song lyrics</h2>
         <pre>{{ song!.lyrics }}</pre>
         <h2>Author</h2>
