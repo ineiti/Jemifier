@@ -39,8 +39,10 @@ faire du développement.
 # TODO
 
 - find why the text of the buttons and checkboxes are so small
-- faire des listes de chants et les exporter
-  - Also do a markov-chain on past services and let the user choose what they want to see
+- exporter des listes de chants en PDF
+- faire des listes de chants
+  - Choose song from /song/JEM-xxxx
+  - Pick list from old lists, duplicate, create new, ...
 - ajouter des liens sur jemaf.fr et/ou youtube
   - add youtube search: https://www.youtube.com/results?search_query=Chef%20couvert%20de%20blessures.%20-%20Hans%20Leo%20Hassler%20-%20af%20100
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
@@ -53,7 +55,9 @@ faire du développement.
 # CHANGELOG
 
 2024-08-04:
+- bug: storage doesn't work anymore
 - faire des listes de chants et les exporter
+  - Also do a markov-chain on past services and let the user choose what they want to see
   - Store current list in localStorage
   - fix UI bug when showing the songs (too squeezed vertically)
 

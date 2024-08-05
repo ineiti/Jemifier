@@ -50,15 +50,17 @@ export class ChosenService {
         }
       }
       this.list.sort((a, b) => b.date - a.date);
-      const nextSunday = new Date();
-      const daysToAdd = (7 - nextSunday.getDay()) % 7;
-      nextSunday.setDate(nextSunday.getDate() + daysToAdd);
-      if (this.list.length === 0 || this.list[this.list.length - 1].date < nextSunday.getDate()) {
+      const msecDay = 24 * 60 * 60 * 1000;
+      let now = new Date().getTime();
+      now -= now % msecDay;
+      const daysToAdd = (7 - new Date(now).getDay()) % 7;
+      const nextSunday = new Date(now + daysToAdd * msecDay);
+      if (this.list.length === 0 || this.list[0].date < nextSunday.getTime()) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         const name = nextSunday.toLocaleDateString(navigator.language, options as Intl.DateTimeFormatOptions);
-        this.list.push({ name, date: nextSunday.getDate(), songs: [] });
+        this.list.push({ name, date: nextSunday.getTime(), songs: [] });
       }
-      this.currentList = this.list[this.list.length - 1];
+      this.currentList = this.list[0];
     } catch (e) {
       console.error(`Oups, couldn't parse data in localStorage (${e}) - deleting it`);
       localStorage.removeItem(ChosenService.STORAGE_LIST);

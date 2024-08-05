@@ -28,7 +28,7 @@ export class ChooseComponent {
     if (this.songId !== undefined) {
       this.chosen.addSong(parseInt(this.songId), this.insertPos);
       this.insertPos++;
-      if (this.insertPos >= this.chosen.currentList.songs.length){
+      if (this.insertPos >= this.chosen.currentList.songs.length) {
         this.insertPos = this.chosen.currentList.songs.length - 1;
       }
     }
@@ -48,16 +48,21 @@ export class ChooseComponent {
     if (this.chosen.currentList.songs.length === 0) {
       return;
     }
-    const last = this.chosen.currentList.songs.slice(this.insertPos ?? -1)[0];
-    this.propositions = this.data.list_songs.songs
+    const last = this.chosen.currentList.songs.slice(this.insertPos)[0];
+    const known = this.data.suggestions
+      .getSuggestionsAll(this.chosen.currentList.songs.slice(0, this.insertPos + 1).map((s) => s.song_id))
+      .map((s) => this.data.list_songs.songs[s]);
+    let keywords = this.data.list_songs.songs
       .filter((s) => last.keywords.length === 0 || s.keywords.includes(last.keywords[0]))
-      .filter((s) => !this.chosen.currentList.songs.some((l) => l.song_id === s.song_id))
       .sort((a, b) => a.keywords.findIndex((k) => k === last.keywords[0]) -
         b.keywords.findIndex((k) => k === last.keywords[0]));
-    const twoFilter = this.propositions.filter((s) => last.keywords.length <= 1 || s.keywords.includes(last.keywords[1]));
+    const twoFilter = keywords.filter((s) => last.keywords.length <= 1 || s.keywords.includes(last.keywords[1]));
     if (twoFilter.length > 1) {
-      this.propositions = twoFilter;
+      keywords = twoFilter;
     }
+
+    this.propositions = known.concat(keywords)
+      .filter((s) => !this.chosen.currentList.songs.some((l) => l.song_id === s.song_id));
   }
 
   delete(pos: number) {

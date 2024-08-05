@@ -32,7 +32,6 @@ export class SongComponent {
       const book = list_books.find_book(bookId);
       const list_songs = this.data_component.list_songs;
       this.song = list_songs.songs[list_songs.find_by_number(book, parseInt(songNbr))];
-      console.dir(this.song);
       this.book = list_books.books[this.song!.book_id].abbreviation;
       this.services = this.data_component.list_services.get_dates(this.song!);
       this.unknown_id = false;
