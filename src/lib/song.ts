@@ -76,6 +76,11 @@ export class Song {
     authors_encoded(): string[] {
         return this.authors().map((a) => encodeURIComponent(a));
     }
+
+    link_youtube(books: ListBooks): string {
+        return `https://www.youtube.com/results?search_query=${this.get_book_number_title(books)} `
+            + this.author;
+    }
 }
 
 class SearchString {

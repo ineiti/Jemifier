@@ -5,7 +5,7 @@
     </p>
 </div>
 <div *ngIf="chosen.list.length > 0">
-    <h1>Votre Liste {{ chosen.currentList.name }}</h1>
+    <h1>Votre Liste du {{ chosen.currentList.name }}</h1>
     <button mat-stroked-button (click)="clear()">Effacer</button>
     <div cdkDropList (cdkDropListDropped)="drop($event)">
         @for (song of chosen.currentList.songs; track song) {

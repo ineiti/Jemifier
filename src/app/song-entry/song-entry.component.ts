@@ -19,6 +19,7 @@ export class SongEntryComponent {
   listBooks!: ListBooks;
   listServices!: ListServices;
   service_dates?: string[];
+  linkYoutube = "";
 
   constructor(private data_component: DataService) { }
 
@@ -26,5 +27,7 @@ export class SongEntryComponent {
     this.listBooks = this.data_component.list_books;
     this.listServices = this.data_component.list_services;
     this.service_dates = this.listServices.get_dates(this.song);
+    this.linkYoutube = `https://www.youtube.com/results?search_query=${this.song!.get_book_number_title(this.listBooks!)} `
+      + this.song.author;
   }
 }

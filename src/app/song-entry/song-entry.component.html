@@ -2,12 +2,15 @@
     <span *ngIf="!hideCheck">
         <a class="take" routerLink="/choose/{{song!.song_id}}">&#9989;</a> -
     </span>
-    <a routerLink="/song/{{song!.get_book_number(listBooks, '-')}}">{{ song!.get_book_number_title(listBooks!) }}</a> -
+    <a class="title" routerLink="/song/{{song!.get_book_number(listBooks, '-')}}">{{
+        song!.get_book_number_title(listBooks!) }}</a> -
+    <a class="youtube" href="{{ song!.link_youtube(listBooks!) }}">Youtube</a>
+    -
     <span *ngIf="service_dates!.length > 0; else none">
         {{ service_dates!.length }} fois:
         <span *ngFor="let service of service_dates!.slice().reverse(); last as isLast">
             <span class="date">
-                <a routerLink="/dates/{{service}}">{{ service }}</a>
+                <a class="date" routerLink="/dates/{{service}}">{{ service }}</a>
             </span>
             <span *ngIf="!isLast">&nbsp; </span>
         </span>

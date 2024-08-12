@@ -6,30 +6,31 @@
 <ng-template #show_song>
     <div *ngIf="song !== undefined">
         <h1> <a class="take" routerLink="/choose/{{song!.song_id}}">&#9989;</a> -
-            {{ book }} {{ song!.number }} - {{ song!.title }}</h1>
-        <h2>Services</h2>
-        <div style="line-height: 2em;">
-            <span *ngFor="let service of services.slice().reverse(); last as isLast">
-                <span class="date">
-                    <a routerLink="/dates/{{service}}">{{ service }}</a>
+            {{ book }} {{ song!.number }} - {{ song!.title }} - <a class="youtube"
+                href="{{ song!.link_youtube(listBooks!) }}">Youtube</a></h1>
+        <div *ngIf="services.length > 0">
+            <h2>Services</h2>
+            <div style="line-height: 2em;">
+                {{ services.length }}x: <span *ngFor="let service of services.slice().reverse(); last as isLast">
+                    <span class="date">
+                        <a class="date" routerLink="/dates/{{service}}">{{ service }}</a>
+                    </span>
+                    <span *ngIf="!isLast">&nbsp; </span>
                 </span>
-                <span *ngIf="!isLast">&nbsp; </span>
-            </span>
+            </div>
         </div>
-        <h2>Chosen</h2>
-        This song has been chosen {{ services.length }} times.
-        <h2>Keywords</h2>
+        <h2>Mots clés</h2>
         <div style="line-height: 2em;">
             <span *ngFor="let keyword of song.keywords;">
-                <span class="date">
-                    <a routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
+                <span>
+                    <a class="keyword" routerLink="/keyword/{{keyword}}">{{ keyword }}</a>
                     &nbsp;
                 </span>
             </span>
         </div>
-        <h2>Song lyrics</h2>
+        <h2>Paroles du chant</h2>
         <pre>{{ song!.lyrics }}</pre>
-        <h2>Author</h2>
+        <h2>Auteur(s)</h2>
         <span *ngFor="let author of song!.authors()">
             <a class="author" routerLink="/author/{{author}}">{{ author }}</a>
         </span>

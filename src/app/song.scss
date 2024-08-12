@@ -1,0 +1,39 @@
+@import "common.scss";
+
+a {
+    color: #0e3454;
+    transition: filter 0.2s ease-in-out;
+}
+
+a:hover {
+    text-decoration: none;
+    filter: brightness(0.8);
+    transition: filter 0.2s ease-in-out;
+}
+
+a.date {
+    background-color: #ffffee;
+    border: 0px;
+}
+
+span.date {
+    white-space: nowrap;
+    display: inline;
+}
+
+a.keyword {
+    background-color: #f0effe;
+}
+
+a.take {
+    background-color: #ffffee;
+    border: 1px solid #ffffee;
+}
+
+a.title {
+    background-color: #f0f0f0;
+}
+
+a.youtube {
+    background-color: #ffeeee;
+}

@@ -7,11 +7,9 @@
       <a routerLink="/preferred" class="inactive-menu-item">Chansons préférées</a>
       <a routerLink="/keywords" class="inactive-menu-item">Mots clés</a>
       <a routerLink="/authors" class="inactive-menu-item">Auteurs</a>
-      <a routerLink="/choose" class="inactive-menu-item">Choix</a>
+      <a routerLink="/choose" class="inactive-menu-item">Listes</a>
     </div>
   </div>
-
-  <button mat-stroked-button>Effacer</button>
 
   <div *ngIf="loaded; else loading" class="container">
     <router-outlet></router-outlet>

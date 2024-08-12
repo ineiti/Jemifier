@@ -1,15 +1,7 @@
 a {
-    background-color: #e0e0e0;
     text-decoration: none;
-    color: #0e3454;
-    transition: background-color 0.2s ease-in-out;
-    border: 1px solid #000;
     padding: 2px;
     margin: 1px;
-}
-
-a:hover {
-    background-color: #9f9d9d;
 }
 
 .song-list {
@@ -24,14 +16,10 @@ a:hover {
     margin-right: 1em;
 }
 
-html {
-    font-size: 100%;
-}
-
 .mat-mdc-outlined-button {
     font-size: 100%;
 }
 
 .mat-mdc-checkbox {
-    font-size: 100%;
+    font-size: 20px;
 }

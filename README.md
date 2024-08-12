@@ -41,9 +41,9 @@ faire du développement.
 - find why the text of the buttons and checkboxes are so small
 - faire des listes de chants
   - Pick list from old lists, duplicate, create new, ...
+  - Send link to list
   - exporter des listes de chants en PDF
 - ajouter des liens sur jemaf.fr et/ou youtube
-  - add youtube search: https://www.youtube.com/results?search_query=Chef%20couvert%20de%20blessures.%20-%20Hans%20Leo%20Hassler%20-%20af%20100
 - on ne peut pas revenir sur une recherche - ajouter un "?search=text" dans l'URL
 - quelques chants n'ont pas de mots clés, p.e. 338, 339
 - merger "dates" et "dates/:date" pour éviter un rechargement de la page
@@ -52,6 +52,9 @@ faire du développement.
 - mettre sur github ou fledg.re d'une façon automatisée, surtout pour l'intégration des listes des cultes
 
 # CHANGELOG
+
+2024-08-12:
+- add youtube search: https://www.youtube.com/results?search_query=Chef%20couvert%20de%20blessures.%20-%20Hans%20Leo%20Hassler%20-%20af%20100
 
 2024-08-04:
 - bug: storage doesn't work anymore

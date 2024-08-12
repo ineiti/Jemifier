@@ -1,5 +1,5 @@
 <div>
-    <mat-checkbox *ngIf="!hideKnownCheckbox && some_unknown()" [(ngModel)]="knownOnly">Seulement chants connus</mat-checkbox>
+    <mat-checkbox *ngIf="!hideKnownCheckbox && some_unknown()" [(ngModel)]="knownOnly"><span class="checkbox">Seulement chants connus</span></mat-checkbox>
     <ul>
         <span *ngFor="let song of songs">
             <li *ngIf="!knownOnly || isKnown(song)">
