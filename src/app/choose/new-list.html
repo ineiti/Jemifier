@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+    <p>Donnez la date et le nom de la liste</p>
+    <mat-form-field>
+        <mat-label>La date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.date">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Le nom</mat-label>
+        <input matInput [(ngModel)]="data.name" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

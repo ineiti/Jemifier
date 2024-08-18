@@ -5,14 +5,29 @@
     </p>
 </div>
 <div *ngIf="chosen.list.length > 0">
-    <h1>Votre Liste du {{ chosen.currentList.name }}</h1>
-    <button mat-stroked-button (click)="clear()">Effacer</button>
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <h1>Votre Liste du
+        <mat-form-field>
+            <mat-select [(value)]="curChoice" (valueChange)="updateListChoice()">
+                @for (entry of chosen.list; track entry ){
+                <mat-option value="{{$index}}">
+                    {{ entry.name }}
+                </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </h1>
+    <div class="buttons">
+        <button mat-stroked-button (click)="shareList()">Partager</button>
+        <button mat-stroked-button (click)="renameList()">Renommer</button>
+        <button mat-stroked-button (click)="addList()">Ajouter</button>
+        <button mat-stroked-button (click)="removeList()">Enlever</button>
+    </div>
+    <div cdkDropList (cdkDropListDropped)="dropSong($event)">
         @for (song of chosen.currentList.songs; track song) {
         <div [class.chosen]="insertPos === $index">
             <span cdkDrag class="drag-box">
-                <span (click)="delete($index)" class="action">&#10060;</span>
-                <span (click)="insert($index)" class="action">&#10068;</span>
+                <span (click)="deleteSong($index)" class="action">&#10060;</span>
+                <span (click)="updateSongProposition($index)" class="action">&#10068;</span>
                 <app-song-entry [song]="song" [hideCheck]="true"></app-song-entry>
             </span>
         </div>

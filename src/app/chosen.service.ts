@@ -36,6 +36,19 @@ export class ChosenService {
   constructor(private data: DataService) {
   }
 
+  static nextSunday(): Date {
+    const msecDay = 24 * 60 * 60 * 1000;
+    let now = new Date().getTime();
+    now -= now % msecDay;
+    const daysToAdd = (7 - new Date(now).getDay()) % 7;
+    return new Date(now + daysToAdd * msecDay);
+  }
+
+  static dateString(d: Date): string {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return d.toLocaleDateString(navigator.language, options as Intl.DateTimeFormatOptions);
+  }
+
   async initLists() {
     try {
       const storageListJSON = localStorage.getItem(ChosenService.STORAGE_LIST);
@@ -50,15 +63,9 @@ export class ChosenService {
         }
       }
       this.list.sort((a, b) => b.date - a.date);
-      const msecDay = 24 * 60 * 60 * 1000;
-      let now = new Date().getTime();
-      now -= now % msecDay;
-      const daysToAdd = (7 - new Date(now).getDay()) % 7;
-      const nextSunday = new Date(now + daysToAdd * msecDay);
+      const nextSunday = ChosenService.nextSunday();
       if (this.list.length === 0 || this.list[0].date < nextSunday.getTime()) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const name = nextSunday.toLocaleDateString(navigator.language, options as Intl.DateTimeFormatOptions);
-        this.list.push({ name, date: nextSunday.getTime(), songs: [] });
+        this.list.push({ name: ChosenService.dateString(nextSunday), date: nextSunday.getTime(), songs: [] });
       }
       this.currentList = this.list[0];
     } catch (e) {
@@ -85,6 +92,41 @@ export class ChosenService {
       this.currentList.songs.splice(pos, 1);
     }
     this.save();
+  }
+
+  chooseList(index: number): boolean {
+    if (index < 0 || index >= this.list.length) {
+      return false;
+    }
+    this.currentList = this.list[index];
+    return true;
+  }
+
+  addList(name: string, date: Date): number {
+    const list = { name, date: date.getTime(), songs: [] }
+    this.list.push(list);
+    this.list.sort((a, b) => b.date - a.date);
+    const index = this.list.findIndex((l) => l === list);
+    this.chooseList(index);
+    this.save();
+    return index;
+  }
+
+  rmList(index = this.list.findIndex((l) => l === this.currentList)): number {
+    if (index < 0 || index >= this.list.length) {
+      return -1;
+    }
+    this.list.splice(index, 1);
+    // Try to set the new list as the next element, or else choose the first element,
+    // or finally create a new list.
+    if (!this.chooseList(index)) {
+      if (!this.chooseList(0)) {
+        const d = ChosenService.nextSunday();
+        this.addList(ChosenService.dateString(d), d);
+      }
+    }
+    this.save();
+    return this.list.findIndex((l) => l === this.currentList);
   }
 
   save() {

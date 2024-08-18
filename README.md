@@ -53,6 +53,10 @@ faire du développement.
 
 # CHANGELOG
 
+2024-08-18:
+- faire des listes de chants
+  - Pick list from old lists, duplicate, create new, ...
+
 2024-08-12:
 - add youtube search: https://www.youtube.com/results?search_query=Chef%20couvert%20de%20blessures.%20-%20Hans%20Leo%20Hassler%20-%20af%20100
 
