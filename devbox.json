@@ -26,6 +26,7 @@
         "bun run build"
       ],
       "build_npm": [
+	"npm ci",
         "npm run build"
       ],
       "update": [
