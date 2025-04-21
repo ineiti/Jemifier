@@ -38,6 +38,7 @@ faire du développement.
 
 # TODO
 
+- Bug: Choose: when deleting highlighted song, there is no highlight anymore
 - find why the text of the buttons and checkboxes are so small
 - faire des listes de chants
   - Pick list from old lists, duplicate, create new, ...

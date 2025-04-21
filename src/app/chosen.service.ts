@@ -30,18 +30,19 @@ export interface StorageSongList {
 })
 export class ChosenService {
   static STORAGE_LIST = "ChosenServiceList";
+  static msecDay = 24 * 60 * 60 * 1000;
+
   list: StorageSongList[] = [];
   currentList!: StorageSongList;
 
   constructor(private data: DataService) {
   }
 
-  static nextSunday(): Date {
-    const msecDay = 24 * 60 * 60 * 1000;
-    let now = new Date().getTime();
-    now -= now % msecDay;
-    const daysToAdd = (7 - new Date(now).getDay()) % 7;
-    return new Date(now + daysToAdd * msecDay);
+  static nextSunday(now = new Date().getTime()): Date {
+    now -= now % ChosenService.msecDay;
+    // If this is called on a Sunday, move to next Sunday.
+    const daysToAdd = (7 - new Date(now).getDay() + 1) % 7;
+    return new Date(now + daysToAdd * ChosenService.msecDay);
   }
 
   static dateString(d: Date): string {
@@ -64,7 +65,7 @@ export class ChosenService {
       }
       this.list.sort((a, b) => b.date - a.date);
       const nextSunday = ChosenService.nextSunday();
-      if (this.list.length === 0 || this.list[0].date < nextSunday.getTime()) {
+      if (this.list.length === 0) {
         this.list.push({ name: ChosenService.dateString(nextSunday), date: nextSunday.getTime(), songs: [] });
       }
       this.currentList = this.list[0];

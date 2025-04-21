@@ -37,6 +37,10 @@ export class ChooseComponent {
   propositions: Song[] = [];
   insertPos = 0;
   curChoice = "0";
+  // This is used to decide if a new list should be added for new songs.
+  // If the user chose a specific list, new songs will be added even to an
+  // old list.
+  showLatestList = true;
   readonly dialog = inject(MatDialog);
 
   constructor(private data: DataService, public chosen: ChosenService) {
@@ -45,6 +49,11 @@ export class ChooseComponent {
 
   ngOnChanges() {
     if (this.songId !== undefined) {
+      if (this.showLatestList && this.chosen.currentList.date < ChosenService.nextSunday().getTime()) {
+        const d = ChosenService.nextSunday();
+        this.chosen.addList(ChosenService.dateString(d), d);
+        this.showLatestList = false;
+      }
       this.chosen.addSong(parseInt(this.songId), this.insertPos);
       this.insertPos++;
       if (this.insertPos >= this.chosen.currentList.songs.length) {
@@ -93,6 +102,7 @@ export class ChooseComponent {
     this.curChoice = index.toString();
     this.chosen.chooseList(index);
     this.insertPos = this.chosen.currentList.songs.length - 1;
+    this.showLatestList = false;
   }
 
   removeList() {
@@ -116,7 +126,7 @@ export class ChooseComponent {
     }
   }
 
-  shareList(){
+  shareList() {
     // TODO: implement shareList
   }
 
