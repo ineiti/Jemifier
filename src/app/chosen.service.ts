@@ -40,8 +40,9 @@ export class ChosenService {
 
   static nextSunday(now = new Date().getTime()): Date {
     now -= now % ChosenService.msecDay;
-    // If this is called on a Sunday, move to next Sunday.
-    const daysToAdd = (7 - new Date(now).getDay() + 1) % 7;
+    // Calculate the number of days to add to get to the next Sunday.
+    // If today is Sunday, we want to add 7 days.
+    const daysToAdd = (7 - new Date(now).getDay());
     return new Date(now + daysToAdd * ChosenService.msecDay);
   }
 
