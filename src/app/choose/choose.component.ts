@@ -10,6 +10,7 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogModule,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
@@ -126,13 +127,26 @@ export class ChooseComponent {
     }
   }
 
-  shareList() {
-    // TODO: implement shareList
+  async copyList() {
+    const text = this.chosen.currentList.songs.map((song) =>
+      `- ${song.get_book_number_title(this.data.list_books)}`
+    ).join("\n");
+    const html = "<ul>\n<li>" + this.chosen.currentList.songs.map((song) =>
+      `<a href="https://jemifier.gasser.blue/song/${song.get_book_number(this.data.list_books, "-")}">
+      ${song.get_book_number_title(this.data.list_books)}</a> - 
+      <a href="${song.link_youtube(this.data.list_books)}">YouTube</a>`
+    ).join("</li><li>") + "</li></ul>";
+    const clipboardItem = new ClipboardItem({
+      "text/plain": new Blob([text], { type: "text/plain" }),
+      "text/html": new Blob([html], { type: "text/html" }),
+    });
+    await navigator.clipboard.write([clipboardItem]);
+    this.dialog.open(DialogCopied);
   }
 
   async showDialog(title: string, name: string, date: Date): Promise<DialogData> {
     return new Promise((res) => {
-      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      const dialogRef = this.dialog.open(DialogListNaming, {
         data: { title, name, date },
       });
 
@@ -146,11 +160,26 @@ export interface DialogData {
   name: string;
   date: Date;
 }
+@Component({
+  selector: 'dialog-copied',
+  template: `<h2 mat-dialog-title>Liste copiée</h2>
+<mat-dialog-content>
+    <p>La liste a été copiée dans le presse-papiers.</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+</mat-dialog-actions>`,
+  standalone: true,
+  styleUrl: './dialog.scss',
+  imports: [MatButtonModule, MatDialogModule,],
+})
+export class DialogCopied {
+}
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
+  selector: 'dialog-list-naming',
   templateUrl: 'new-list.html',
-  styleUrl: './choose.component.scss',
+  styleUrl: './dialog.scss',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
@@ -165,8 +194,8 @@ export interface DialogData {
     MatDatepickerModule,
   ],
 })
-export class DialogOverviewExampleDialog {
-  readonly dialogRef = inject(MatDialogRef<DialogOverviewExampleDialog>);
+export class DialogListNaming {
+  readonly dialogRef = inject(MatDialogRef<DialogListNaming>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
   onNoClick(): void {
