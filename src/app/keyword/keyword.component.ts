@@ -23,7 +23,7 @@ export class KeywordComponent {
   ngOnChanges() {
     document.title = "Jemifier - mots clés";
     const listSongs = this.data_component.list_songs;
-    this.keywords = this.data_component.keywords.list.map((k) => k.replace('-', '&#8209;'));
+    this.keywords = this.data_component.keywords.list;
     this.keywords.sort((a, b) => a.localeCompare(b));
     if (this.keyword !== undefined) {
       this.songs = listSongs.songs
