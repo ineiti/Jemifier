@@ -34,7 +34,7 @@
         "bun create_songs.ts config.yaml",
         "bun create_services.ts config.yaml",
         "scp ../src/assets/*.json hosting:data/sites/gasser.blue/jemifier/src/assets",
-        "ssh hosting 'cd data/sites/gasser.blue/jemifier && git pull && devbox run build_npm'"
+        "ssh hosting 'cd data/sites/gasser.blue/jemifier && git reset --hard && git pull && devbox run build_npm'"
       ]
     }
   },
